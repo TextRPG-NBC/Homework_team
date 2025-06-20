@@ -11,3 +11,10 @@ void Monster::takeDamage(int damage)
 		health -= damage;
 	}
 }
+
+void Monster::displayMonster()
+{
+	std::cout << "몬스터 " << this->name << " 등장!";
+	std::cout << "체력: " << this->health;
+	std::cout << ", 공격력: " << this->attack << std::endl;
+}
