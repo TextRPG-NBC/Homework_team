@@ -6,7 +6,8 @@
 
 using namespace std;
 
-class Character {
+class Character
+{
 public:
 	string name;
 	int level = 1;

@@ -22,12 +22,42 @@ void Character::displayInfo() const {
 
 void Character::levelUp()
 {
+	if (exp > 100)
+	{
+		exp -= 100;
+		level++;
+		health = 180 + (level * 20);
+		attackPower = 25 + (level * 5);
+
+		cout << name << " has leveled up to level " << level << "!" << endl;
+		return;
+	}
 }
 
 void Character::useItem()
 {
+	if (inventory.empty())
+	{
+		cout << "Inventory is empty!" << endl;
+		return;
+	}
+	else
+	{
+		for (int i = 0; i <= inventory.size(); i++)
+		{
+			cout << i << ". " << inventory[i] << endl;
+		}
+		int selectItem;
+		cout << "Select item to use: ";
+		cin >> selectItem;
+		if (true)
+		{
+			//내용 추가 필요
+		}
+	}
 }
 
 void Character::visitShop()
 {
+
 }
