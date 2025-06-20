@@ -15,13 +15,12 @@ public:
 	int health = 180 + (level*20);
 	int attackPower = 25 + (level*5);
 	int criticalRate = 0;
-	int money = 0;
+	int gold = 0;
 	vector<int> inventory;
 
 
-	Character(const string& name, int level, int exp, int criticalRate, int money, vector<string> invenroty);
+	Character(const string& name, int level, int exp, int criticalRate, int gold, vector<string> invenroty);
 	void displayInfo() const;
 	void levelUp();
 	void useItem();
-	void visitShop();
 };

@@ -4,8 +4,8 @@
 #include "character.h"
 using namespace std;
 
-Character::Character(const string& name, int level, int exp, int criticalRate, int money, vector<string> invenroty)
-	: name(name), level(level), exp(exp), health(180 + (level * 20)), attackPower(25 + (level * 5)), criticalRate(criticalRate), money(money), inventory(inventory) {
+Character::Character(const string& name, int level, int exp, int criticalRate, int gold, vector<string> invenroty)
+	: name(name), level(level), exp(exp), health(180 + (level * 20)), attackPower(25 + (level * 5)), criticalRate(criticalRate), gold(gold), inventory(inventory) {
 }
 
 void Character::displayInfo() const {
@@ -15,7 +15,7 @@ void Character::displayInfo() const {
 	cout << "Health: " << health << endl;
 	cout << "Attack Power: " << attackPower << endl;
 	cout << "Critical Rate: " << criticalRate << "%" << endl;
-	cout << "Have money : " << money << endl;
+	cout << "Have money : " << gold << endl;
 	cout << "Inventory: " << endl;
 	cout << "------------------------" << endl;
 }
@@ -55,9 +55,4 @@ void Character::useItem()
 			//내용 추가 필요
 		}
 	}
-}
-
-void Character::visitShop()
-{
-
 }
