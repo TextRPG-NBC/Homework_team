@@ -132,6 +132,7 @@
     <ClInclude Include="CommonInclude.h" />
     <ClInclude Include="MonsterTypes.h" />
     <ClInclude Include="Monster.h" />
+    <ClCompile Include="character.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
