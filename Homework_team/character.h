@@ -7,16 +7,19 @@ using namespace std;
 
 class Character {
 public:
-	string name;
-	int level = 1;
-	int exp = 0;
-	int health = 0;
-	int attackPower = 0;
-	int money = 0;
+    string name;
+    int level;
+    int exp;
+    int health;
+    int attackPower;
+    int criticalRate;
+    int money;
+    vector<string> inventory;
 
-	Character(const string& name, int level, int exp = 0, int money = 0)
-		: name(name), level(level), exp(exp), health(180 + (level * 20)), attackPower(25 + (level * 5)), money(money) {
-	}
-{
+    Character(const string& name, int level, int exp = 0, int money = 0);
+
+    void displayStatus() const;
+    void levelUp();
+    void useItem(int index);
+    void visitShop();
 };
-
