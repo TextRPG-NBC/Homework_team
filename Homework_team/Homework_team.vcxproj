@@ -123,11 +123,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="character.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterTypes.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="character.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="character.h" />
+    <ClInclude Include="CommonInclude.h" />
+    <ClInclude Include="MonsterTypes.h" />
+    <ClInclude Include="Monster.h" />
+    <ClCompile Include="character.h" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

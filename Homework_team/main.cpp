@@ -1,8 +1,11 @@
 #include <iostream>
+#include "MonsterTypes.h"
+
+using namespace std;
 
 int main()
 {
-	std::cout << "Test" << std::endl;
+	srand(time(NULL));
 
 	return 0;
 }
