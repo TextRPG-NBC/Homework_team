@@ -68,5 +68,8 @@
     <ClInclude Include="GameManager.h">
       <Filter>헤더 파일\GameManager</Filter>
     </ClInclude>
+    <ClInclude Include="RandomUtils.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

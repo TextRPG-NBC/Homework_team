@@ -25,7 +25,7 @@ int main()
 	
 	while (1) {
 		system("cls");
-		// 전투하기 (10레벨 달성 시, 보스전)
+		// 전투하기
 		bool IsCharacterDead = GM.battle(Player);
 
 		// 1. 전투 승리 -> 상점 시스템 -> 다음 전투

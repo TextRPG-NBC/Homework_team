@@ -135,6 +135,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MonsterTypes.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="RandomUtils.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

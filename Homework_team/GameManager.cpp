@@ -6,7 +6,7 @@
 Monster* GameManager::generateMonster(int level)
 {
 	int NumberOfMonster = 3;
-	int RandomValue = rand() % NumberOfMonster;
+	int RandomValue = RandomUtil::getInt(0, NumberOfMonster - 1);
 
 	Monster* newMonster = nullptr;
 
@@ -117,7 +117,7 @@ void GameManager::displayInventory(Character* player)
 
 void GameManager::getItemByBattle(Character* player)
 {
-	GoldToReceive = rand() % 11 + 10;	// 10 ~ 20 °ñµå ·£´ý È¹µæ
+	GoldToReceive = RandomUtil::getInt(10, 20);	// 10 ~ 20 °ñµå ·£´ý È¹µæ
 
 	player->exp += ExperienceToReceive;
 	player->money += GoldToReceive;
@@ -125,8 +125,8 @@ void GameManager::getItemByBattle(Character* player)
 	cout << player->name << "°¡ " << ExperienceToReceive << " EXP¿Í " << GoldToReceive << " °ñµå¸¦ È¹µæÇß½À´Ï´Ù. ";
 	cout << "ÇöÀç EXP: " << player->exp << "/100, °ñµå: " << player->money << "\n";
  
-	int RandValue = rand() % 100;
-	if (RandValue < ProbabilityToGetItem) {
+	int RandValue = RandomUtil::getInt(1, 100);
+	if (RandValue <= ProbabilityToGetItem) {
 		cout << "----- ¾ÆÀÌÅÛ È¹µæ -----" << endl;
 	}
 
