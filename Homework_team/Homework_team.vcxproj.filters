@@ -28,6 +28,12 @@
     <Filter Include="헤더 파일\Common">
       <UniqueIdentifier>{31be0af3-bb74-45cf-93c4-08d26d866dc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameManager">
+      <UniqueIdentifier>{be4df9bd-3eb4-44a7-8a93-0bed9686e0fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameManager">
+      <UniqueIdentifier>{719b190b-da62-4c59-86f9-d5b1559dcf2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +48,9 @@
     <ClCompile Include="MonsterTypes.cpp">
       <Filter>소스 파일\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h">
@@ -54,6 +63,12 @@
       <Filter>헤더 파일\Monster</Filter>
     </ClInclude>
     <ClInclude Include="CommonInclude.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>헤더 파일\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomUtils.h">
       <Filter>헤더 파일\Common</Filter>
     </ClInclude>
   </ItemGroup>
