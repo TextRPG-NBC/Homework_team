@@ -13,19 +13,17 @@ Monster* GameManager::generateMonster(int level)
 	if (RandomValue == 0)
 	{
 		newMonster = new Goblin(level);
-		newMonster->displayMonster();
 	}
 	else if (RandomValue == 1)
 	{
 		newMonster = new Orc(level);
-		newMonster->displayMonster();
 	}
 	else if (RandomValue == 2)
 	{
 		newMonster = new Troll(level);
-		newMonster->displayMonster();
 	}
-	
+	newMonster->displayMonster();
+
 	return newMonster;
 }
 
@@ -126,7 +124,8 @@ void GameManager::getItemByBattle(Character* player)
 	cout << "ÇöÀç EXP: " << player->exp << "/100, °ñµå: " << player->money << "\n";
  
 	int RandValue = RandomUtil::getInt(1, 100);
-	if (RandValue <= ProbabilityToGetItem) {
+	if (RandValue <= ProbabilityToGetItem) 
+	{
 		cout << "----- ¾ÆÀÌÅÛ È¹µæ -----" << endl;
 	}
 
