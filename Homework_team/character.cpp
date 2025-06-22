@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include "character.h"
+#include "item.h"
+
 using namespace std;
 
 Character::Character(const string& name, int level, int exp, int criticalRate, int gold, vector<string> invenroty, vector<string> equipment)
@@ -98,17 +100,18 @@ void Character::buyItem(const string& itemName, int price) //아이템 구매
 	}
 }
 
+void Character::addItem(const string& itemName) //아이템 추가(전투중 습득을 위해 별도 설정함, buyItem에 추가되어있음.)
+{
+	inventory.push_back(itemName);
+	cout << itemName << " added to inventory." << endl;
+}
+
 void Character::sellItem(const string& itemName, int price) // 아이템 판매
 {
 	gold += price;
 	unEquipment(itemName, attackPower, health, criticalRate);
 }
 
-void Character::addItem(const string& itemName) //아이템 추가(전투중 습득을 위해 별도 설정함, butItem에 추가되어있음.)
-{
-		inventory.push_back(itemName);
-		cout << itemName << " added to inventory." << endl;
-}
 
 void Character::useItem() //아이템 사용
 {
@@ -126,5 +129,8 @@ void Character::useItem() //아이템 사용
 		int selectItem;
 		cout << "Select item to use: ";
 		cin >> selectItem;
+		//사용 후 제거 기능 추가 필요
+
+		
 	}
 }
