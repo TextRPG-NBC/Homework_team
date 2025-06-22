@@ -123,16 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterTypes.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="CommonInclude.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="MonsterTypes.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="RandomUtils.h" />
+    <ClInclude Include="Shop.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
