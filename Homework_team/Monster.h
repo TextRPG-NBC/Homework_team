@@ -7,6 +7,7 @@ public:
 	~Monster() {}
 
 	void takeDamage(int damage);
+	void displayMonster();
 	// Todo : 아이템 떨어뜨리는 로직 작성
 
 	std::string getName() const { return name; }
