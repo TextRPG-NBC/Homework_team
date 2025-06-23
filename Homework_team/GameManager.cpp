@@ -41,14 +41,14 @@ bool GameManager::battle(Character* player)
 	
 	Monster* newMonster = nullptr;
 	// 레벨 10 미만 시 일반 몬스터 소환
-	if (player->level < 10) 
+	if (player->getLevel() < 10) 
 	{
-		newMonster = generateMonster(player->level);
+		newMonster = generateMonster(player->getLevel());
 	}
 	// 레벨 10 달성 시 보스 몬스터 소환
 	else
 	{
-		newMonster = generateBossMonster(player->level);
+		newMonster = generateBossMonster(player->getLevel());
 	}
 
 	assert(newMonster != nullptr);
@@ -56,8 +56,8 @@ bool GameManager::battle(Character* player)
 	// 전투 장면
 	while (1) {
 		// 플레이어가 몬스터 공격
-		cout << player->name << "이(가) " << newMonster->getName() << "을 공격합니다! ";
-		newMonster->takeDamage(player->attackPower);
+		cout << player->getName() << "이(가) " << newMonster->getName() << "을 공격합니다! ";
+		newMonster->takeDamage(player->getAttackPower());
 
 		// 몬스터 처치
 		if (newMonster->getHealth() <= 0) 
@@ -71,19 +71,19 @@ bool GameManager::battle(Character* player)
 		}
 
 		// 플레이어가 몬스터 공격
-		cout << newMonster->getName() << "이(가) " << player->name << "을 공격합니다! ";
-		player->health -= newMonster->getAttack();
+		cout << newMonster->getName() << "이(가) " << player->getName() << "을 공격합니다! ";
+		player->takeDamage(newMonster->getAttack());
 		
 		// 플레이어가 사망
-		if (player->health <= 0) 
+		if (player->getHealth() <= 0) 
 		{
-			cout << player->name << " 체력: 0" << endl;
+			cout << player->getName() << " 체력: 0" << endl;
 			IsCharacterDead = true;
 			break;
 		}
 		else 
 		{
-			cout << player->name << " 체력: " << player->health << endl;
+			cout << player->getName() << " 체력: " << player->getHealth() << endl;
 		}
 	}
 
@@ -101,27 +101,24 @@ bool GameManager::battle(Character* player)
 void GameManager::visitShop(Character* player)
 {
 	cout << " === 상점을 방문하였습니다 === \n";
-	player->visitShop();
+	//TODO : 상점 방문 부분 추가
 }
 
 void GameManager::displayInventory(Character* player)
 {
 	cout << " === 현재 플레이어가 가지고 있는 아이템 === \n";
-	for (int i : player->inventory)
-	{
-		cout << "- " << i << endl;
-	}
+	// TODO : 인벤토리 출력 기능
 }
 
 void GameManager::getItemByBattle(Character* player)
 {
 	GoldToReceive = RandomUtil::getInt(10, 20);	// 10 ~ 20 골드 랜덤 획득
 
-	player->exp += ExperienceToReceive;
-	player->money += GoldToReceive;
+	player->gainExp(ExperienceToReceive);
+	player->addGold(GoldToReceive);
 
-	cout << player->name << "가 " << ExperienceToReceive << " EXP와 " << GoldToReceive << " 골드를 획득했습니다. ";
-	cout << "현재 EXP: " << player->exp << "/100, 골드: " << player->money << "\n";
+	cout << player->getName() << "가 " << ExperienceToReceive << " EXP와 " << GoldToReceive << " 골드를 획득했습니다. ";
+	cout << "현재 EXP: " << player->getExp() << "/100, 골드: " << player->getGold() << "\n";
  
 	int RandValue = RandomUtil::getInt(1, 100);
 	if (RandValue <= ProbabilityToGetItem) 
