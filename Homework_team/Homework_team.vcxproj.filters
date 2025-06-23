@@ -40,6 +40,12 @@
     <Filter Include="헤더 파일\Shop">
       <UniqueIdentifier>{06ba8bb5-842f-434f-95d0-5adf91d5acee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Item">
+      <UniqueIdentifier>{78213e71-b01c-481a-ac33-82a46bc5334c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Item">
+      <UniqueIdentifier>{1146ae43-8234-4551-b83a-69c0073cc1bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="Shop.cpp">
       <Filter>소스 파일\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="Shop.h">
       <Filter>헤더 파일\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
