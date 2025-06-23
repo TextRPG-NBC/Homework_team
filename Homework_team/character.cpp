@@ -30,7 +30,7 @@ void Character::displayInfo() const {											//캐릭터 정보
 	}
 	else {
 		for (Item* item : inventory) {
-			cout << "equipment Item: " << item->itemName << endl;				 //보유한 장비 출력
+			cout << "equipment Item: " << item->getItemName() << endl;				 //보유한 장비 출력
 		}
 	}
 
@@ -39,7 +39,7 @@ void Character::displayInfo() const {											//캐릭터 정보
 	}
 	else {
 		for (Item* item : inventory) {
-			cout << "Inventory Item: " << item->itemName << endl;				 //보유한 장비 출력
+			cout << "Inventory Item: " << item->getItemName() << endl;				 //보유한 장비 출력
 		}
 	}
 
@@ -48,7 +48,7 @@ void Character::displayInfo() const {											//캐릭터 정보
 	}
 	else {
 		for (Item* item : PotionBag) {
-			cout << "Potion Item: " << item->itemName << endl;				 //보유한 소모품 출력
+			cout << "Potion Item: " << item->getItemName() << endl;				 //보유한 소모품 출력
 		}
 	}
 }
@@ -102,14 +102,14 @@ void Character::addEquipment(Item* item, int ItemID)							 // 0: 무기, 1: 방어�
 	{
 		equipment.at(ItemID) = item;										//새 장비 장착
 		addStatus(item);													//새 장비 능력치 적용
-		cout << "you equip Weapon" << item->itemName << endl;
+		cout << "you equip Weapon" << item->getItemName() << endl;
 	}
 	else
 	{
 		deleteEquipment(equipment[ItemID], ItemID);							//구 장비 제거	
 		removeStatus(equipment[ItemID]);									//구 장비 능력치 제거
-		cout << "equiped " << equipment[ItemID]->itemName << "put in bag" << endl;
-		cout << "now you equip " << item->itemName << endl;
+		cout << "equiped " << equipment[ItemID]->getItemName() << "put in bag" << endl;
+		cout << "now you equip " << item->getItemName() << endl;
 		equipment.at(ItemID) = item;										//새 장비 장착
 		addStatus(item);													//새 장비 능력치 적용 장착									
 	}
@@ -126,8 +126,8 @@ void Character::deleteEquipment(Item* item, int position)					//장비 해제
 	{
 		inventory.push_back(equipment[position]);							//인벤토리에 창작했던 장비 추가		
 		equipment.erase(equipment.begin() + position);
-		cout << item->itemName << " removed from equipment." << endl;
-		cout << "equiped " << equipment[position]->itemName << "put in bag" << endl;
+		cout << item->getItemName() << " removed from equipment." << endl;
+		cout << "equiped " << equipment[position]->getItemName() << "put in bag" << endl;
 		return;
 	}
 
@@ -135,44 +135,44 @@ void Character::deleteEquipment(Item* item, int position)					//장비 해제
 
 void Character::addStatus(Item* item)
 {
-	attackPower += item->attackPower_attribute;
-	health += item->health_attribute;
-	criticalRate += item->critRate_attribute;
-	cout << item->itemName << " added to equipment." << endl;
+	attackPower += item->getAttackPower();
+	health += item->getHealth();
+	criticalRate += item->getCritRate();
+	cout << item->getItemName() << " added to equipment." << endl;
 }
 
 void Character::removeStatus(Item* item)
 {
-	attackPower -= item->attackPower_attribute;
-	health -= item->health_attribute;
-	criticalRate -= item->critRate_attribute;
-	cout << item->itemName << " removed from equipment." << endl;
+	attackPower += item->getAttackPower();
+	health += item->getHealth();
+	criticalRate += item->getCritRate();
+	cout << item->getItemName() << " removed from equipment." << endl;
 }
 
 
 void Character::buyItem(Item* item)											//아이템 구매
 {
-	if (gold < item->price)
+	if (gold < item->getPrice())
 	{
-		cout << "Not enough gold to buy " << item->itemName << "." << endl;
+		cout << "Not enough gold to buy " << item->getItemName() << "." << endl;
 	}
 	else
 	{
-		gold -= item->price;
-		cout << item->itemName << " bought for " << item->price << " gold." << endl;
+		gold -= item->getPrice();
+		cout << item->getItemName() << " bought for " << item->getPrice() << " gold." << endl;
 		inventory.push_back(item);											 //구매한 아이템을 인벤토리에 추가
 	}
 }
 
 void Character::sellItem(Item* item)										 // 아이템 판매
 {
-	gold += item->price;
-	if (item->itemID == 2) // 아이템이 nullptr인 경우 처리
+	gold += item->getPrice();
+	if (item->getItemID() == 2) // 아이템이 nullptr인 경우 처리
 	{
 		PotionBag.erase(
 			remove_if(PotionBag.begin(), PotionBag.end(), [](const Item& item) {}));
 	}
-	else if (item->itemID == 0 || 1) // 아이템이 nullptr인 경우 처리
+	else if (item->getItemID() == 0 || 1) // 아이템이 nullptr인 경우 처리
 	{
 		inventory.erase(
 			remove_if(inventory.begin(), inventory.end(),
@@ -186,13 +186,13 @@ void Character::sellItem(Item* item)										 // 아이템 판매
 	}
 }
 
-void Character::getItem(Item* item)
+void Character::addItem(Item* item)
 {
-	if (item->itemID == 2) // 아이템이 nullptr인 경우 처리
+	if (item->getItemID() == 2) // 아이템이 nullptr인 경우 처리
 	{
 		PotionBag.push_back(item);
 	}
-	else if (item->itemID == 0 || 1) // 아이템이 nullptr인 경우 처리
+	else if (item->getItemID() == 0 || 1) // 아이템이 nullptr인 경우 처리
 	{
 		inventory.push_back(item); // 아이템을 인벤토리에 추가
 	}
@@ -201,7 +201,7 @@ void Character::getItem(Item* item)
 		NULL; // 아이템이 nullptr인 경우 처리
 	}
 
-	cout << item->itemName << " added to bag" << endl;
+	cout << item->getItemName() << " added to bag" << endl;
 }
 
 void Character::useItem(Item* item) //아이템 사용
@@ -214,7 +214,7 @@ void Character::useItem(Item* item) //아이템 사용
 	{
 		for (int i = 0; i <= inventory.size(); i++)
 		{
-			cout << i << ". " << inventory[i] << endl;
+			cout << i << ". " << inventory[i]->getItemName() << endl;
 		}
 		int selectItem;
 		cout << "Select item to use: ";
@@ -222,7 +222,7 @@ void Character::useItem(Item* item) //아이템 사용
 
 		equipment.erase(equipment.begin() + selectItem);
 		addStatus(item); // 아이템 능력치 적용
-		cout << "you used" << item->itemName;
+		cout << "you used" << item->getItemName();
 	}
 }
 

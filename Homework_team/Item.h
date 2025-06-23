@@ -4,7 +4,7 @@
 using namespace std;
 
 class Item {
-public:
+private:
     string itemName;
     int itemID; //0:公扁, 1 : 规绢备, 2 : 器记
     int attackPower_attribute;

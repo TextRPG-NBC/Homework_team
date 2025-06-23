@@ -39,7 +39,7 @@ public:
 	void sellItem(Item* item);
 
 	//item management
-	void getItem(Item* item);
+	void addItem(Item* item);
 	void useItem(Item* item);
 
 	// °ñµå Ãß°¡
