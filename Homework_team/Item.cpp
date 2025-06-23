@@ -1,33 +1,42 @@
-
-#pragma once
-
 #include "Item.h"
 #include <string>
 
 using namespace std;
 
-Item::Item(string name, int price, int attackPower, int health, int critRate)
-	: itemName(name), price(price), attackPower_attribute(attackPower), health_attribute(health), critRate_attribute(critRate) {
+// 순서 : 이름, 아이템ID(0:무기, 1:방어구, 2:포션), 가격, 공격력, 체력, 크리티컬 확률
+
+class DamageWeapon : public Item //아이템 상속 : 무기
+{
+public:
+	DamageWeapon() : Item("DamageWeapon", 0, 150, 40, 0, 0) {};
+};
+
+class CritWeapon : public Item //아이템 상속 : 무기
+{
+public:
+	CritWeapon() : Item("CritWeapon", 0, 140, 10, 0, 30) {};
+};
+
+class Amour : public Item //아이템 상속 : 방어구
+{
+public:
+	Amour() : Item("Amour", 1, 110, 0, 150, 0) {};
 };
 
 class healthPotion : public Item //아이템 상속 : 체력포션
 {
 public:
-	healthPotion() : Item("Health Potion", 50, 0, 50, 0) {}; // 순서 : 이름, 가격, 공격력, 체력, 크리티컬 확률
+	healthPotion() : Item("Health Potion", 2, 50, 0, 50, 0) {};
 };
 
 class powerPotion : public Item //아이템 상속 : 데미지 증가 포션
 {
 public:
-	powerPotion() : Item("Power Potion", 50, 10, 0, 0) {}; // 순서 : 이름, 가격, 공격력, 체력, 크리티컬 확률
+	powerPotion() : Item("Power Potion", 2, 50, 10, 0, 0) {};
 };
 
 class CritPotion : public Item //아이템 상속 : 크리티컬 확률 증가 포션
 {
 public:
-	CritPotion() : Item("Crit Potion", 50, 0, 0, 10) {}; // 아이템 이름, 가격, 공격력, 체력, 크리티컬 확률
-		
+	CritPotion() : Item("Crit Potion", 2, 50, 0, 0, 10) {};
 };
-
-//	case Item::healthPotion: // 아이템 종류에 따라 객체 생성??
-//	return new healthPotion();

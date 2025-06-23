@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Change 'class Item;' to 'struct Item;' to match the definition in shop.h
 class Item;
 
 class Character
@@ -22,14 +23,16 @@ public:
 	//about character status
 	void displayInfo() const;
 	void gainExp(int amount); 
-	void levelUp();
+	void addStatus(Item* item);
+	void removeStatus(Item* item);
 
 	//about battle 
+	// void attack(Character* target);
 	void takeDamage(int damage);
 
 	//about equipment
-	void addEquipment(Item* item);
-	void unEquipment(Item* item);
+	void addEquipment(Item* item, int positon);
+	void deleteEquipment(Item* item, int position);
 
 	//about shop
 	void buyItem(Item* item);
@@ -39,7 +42,7 @@ public:
 	void addItem(Item* item);
 	void useItem(Item* item);
 
-	// 스탯 추가
+	// 골드 추가
 	void addGold(int amount);
 
 	// 스탯 정보 Getter
@@ -52,6 +55,7 @@ public:
 	int getGold() 				 const { return gold; }
 	int getPlayerState() 		 const { return playerState; }
 	vector<Item*> getEquipment()	   { return equipment; }
+	vector<Item*> getPotionBag()	   { return PotionBag; }
 	vector<Item*> getInventory()	   { return inventory; }
 
 private:
@@ -63,6 +67,7 @@ private:
 	int criticalRate;			// 크리티컬 확률
 	int gold;					// 소지금
 	State playerState;			// 플레이어 상태
-	vector<Item*> equipment;	// 장비 인벤토리
-	vector<Item*> inventory;	// 소비아이템 인벤토리
+	vector<Item*> equipment;	// 현재 장착 인벤토리
+	vector<Item*> PotionBag;	// 포션 인벤토리
+	vector<Item*> inventory;	// 장비 인벤토리
 };
