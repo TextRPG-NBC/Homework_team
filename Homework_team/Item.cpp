@@ -24,6 +24,10 @@ public:
 
 class CritPotion : public Item //아이템 상속 : 크리티컬 확률 증가 포션
 {
+public:
 	CritPotion() : Item("Crit Potion", 50, 0, 0, 10) {}; // 아이템 이름, 가격, 공격력, 체력, 크리티컬 확률
 		
 };
+
+//	case Item::healthPotion: // 아이템 종류에 따라 객체 생성??
+//	return new healthPotion();

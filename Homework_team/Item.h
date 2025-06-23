@@ -17,6 +17,8 @@ public:
 	Item(string name, int price, int attackPower, int health, int critRate)
 		: itemName(name), price(price), attackPower_attribute(attackPower), health_attribute(health), critRate_attribute(critRate) {
 	}
+
+	virtual ~Item() {};
 };
 
 class equpItem : public Item
