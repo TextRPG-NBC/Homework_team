@@ -1,17 +1,21 @@
-#include <string>
-#include <vector>
-#include <iostream>
 #include "character.h"
 #include "item.h"
 
 using namespace std;
 
+Character::Character(const string& name)
+	: name(name)
+	, level(0)
+	, exp(0)
+	, health(0)	
+	, attackPower(0)
+	, criticalRate(0)
+	, gold(0)
+	, playerState(State::ALIVE)
+{
+} 
 
-Character::Character(const string& name, int level, int exp, int criticalRate, int gold, vector<Item*> equipemnt, vector<string> invenroty)
-	: name(name), level(level), exp(exp), health(180 + (level * 20)), attackPower(25 + (level * 5)), criticalRate(criticalRate), gold(gold), inventory(inventory), equipment(equipment) {} //레벨에 비례한 체력 공격력
-
-
-	void Character::displayInfo() const { //캐릭터 정보
+void Character::displayInfo() const { //캐릭터 정보
     cout << "Name: " << name << endl;
     cout << "Level: " << level << endl;
     cout << "Experience: " << exp << endl;
@@ -43,17 +47,31 @@ void Character::gainExp(int amount) //경험치 획득
 {
 	exp += amount;
 	cout << name << amount << " exp points up!" << endl;
+	levelUp();
 }
 
 void Character::levelUp() //레벨업
 {
-	exp -= 100;
-	level++;
-	health = 180 + (level * 20);
-	attackPower = 25 + (level * 5);
+	if (exp >= 100) {
+		exp = 0;
+		level++;
+		health = 180 + (level * 20);
+		attackPower = 25 + (level * 5);
 
-	cout << name << " is level up! current level : " << level << endl;
-	return;
+		cout << name << " is level up! current level : " << level << endl;
+	}
+}
+
+void Character::takeDamage(int damage)
+{
+	if (health - damage < 0)
+	{
+		health = 0;
+	}
+	else
+	{
+		health -= damage;
+	}
 }
 
 void Character::addEquipment(Item* item)
@@ -130,4 +148,10 @@ void Character::useItem(Item* item) //아이템 사용
 		
 	}
 }
+
+void Character::addGold(int amount)
+{
+	gold += amount;
+}
+
 

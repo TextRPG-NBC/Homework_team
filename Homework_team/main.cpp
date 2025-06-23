@@ -22,7 +22,7 @@ int main()
 		cout << "캐릭터 이름을 재입력하세요: ";
 	} while(getline(cin, PlayerName));
 
-	Character* Player = new Character(PlayerName, 1, 0, 0, 0, {});
+	Character* Player = new Character(PlayerName);
 	Shop ShopSystem;
 
 	while (1) {
@@ -44,7 +44,7 @@ int main()
 				ShopSystem.displayItems();
 
 				// 캐릭터 보유 골드 출력
-				cout << "골드: " << Player->money << "\n";
+				cout << "골드: " << Player->getGold() << "\n";
 				
 				// 구매할 아이템 번호 선택
 				int BuyItemNumber = 0;
@@ -61,7 +61,7 @@ int main()
 		}
 		else // 2. 캐릭터 사망 -> 게임 종료
 		{
-			cout << Player->name << "가 사망했습니다. 게임 오버!" << endl;
+			cout << Player->getName() << "가 사망했습니다. 게임 오버!" << endl;
 			break;
 		}
 	}
