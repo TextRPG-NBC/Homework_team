@@ -13,11 +13,8 @@ void ItemManager::getItemListVector()
     itemVector.push_back(new Item("Crit Potion", 2, 50, 0, 0, 10));
 }
 
-Item* ItemManager::randomItem() // 반환 형식을 Item*로 수정
+Item* ItemManager::randomItem()
 {
-    if (itemVector.empty()) {
-        getItemListVector();
-    }
-    int randomIndex = rand() % itemVector.size();
+      int randomIndex = rand() % itemVector.size();
     return itemVector[randomIndex];
 }
