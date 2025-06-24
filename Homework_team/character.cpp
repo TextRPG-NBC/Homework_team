@@ -84,7 +84,7 @@ void Character::takeDamage(int damage)
 	}
 }
 
-void Character::addEquipment(Item* item, int ItemID) // 0: ï¿½ï¿½ï¿½ï¿½, 1: ï¿½ï¿½î±¸  
+void Character::addEquipment(Item* item, int ItemID) // 0: ï¿½ï¿½ï¿½ï¿½, 1: ï¿½ï¿½î±? 
 {  
     if (ItemID == 0) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  
     {  
@@ -104,22 +104,22 @@ void Character::addEquipment(Item* item, int ItemID) // 0: ï¿½ï¿½ï¿½ï¿½, 1: ï¿½ï
             addStatus(item); // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
         }  
     }  
-    else if (ItemID == 1) // ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½  
+    else if (ItemID == 1) // ï¿½ï¿½î±?ï¿½ï¿½ï¿½ï¿½  
     {  
         if (armourEquipment == nullptr)
         {  
-            armourEquipment = item; // ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½  
-            addStatus(item); // ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
+            armourEquipment = item; // ï¿½ï¿½ ï¿½ï¿½î±?ï¿½ï¿½ï¿½ï¿½  
+            addStatus(item); // ï¿½ï¿½ ï¿½ï¿½î±?ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
             cout << "equip : " << item->getItemName() << endl;  
         }  
         else  
         {  
-            removeStatus(armourEquipment); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
-            inventory.push_back(armourEquipment); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½  
+            removeStatus(armourEquipment); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±?ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
+            inventory.push_back(armourEquipment); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ï¿½ï¿?ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½  
             cout << "equipped : " << armourEquipment->getItemName() << " put in bag" << endl;  
             cout << "now you equip " << item->getItemName() << endl;  
-            armourEquipment = item; // ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½  
-            addStatus(item); // ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
+            armourEquipment = item; // ï¿½ï¿½ ï¿½ï¿½î±?ï¿½ï¿½ï¿½ï¿½  
+            addStatus(item); // ï¿½ï¿½ ï¿½ï¿½î±?ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½  
         }  
     }  
     else  
@@ -129,9 +129,9 @@ void Character::addEquipment(Item* item, int ItemID) // 0: ï¿½ï¿½ï¿½ï¿½, 1: ï¿½ï
 }
 
 
-void Character::deleteEquipment(Item* item, int ItemID)		//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+void Character::deleteEquipment(Item* item, int ItemID)		//ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½ï¿½
 {
-	if (ItemID == 0)											// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½	
+	if (ItemID == 0)											// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿?
 		{
 		if (weaponEquipment == nullptr)	
 		{
@@ -155,15 +155,15 @@ void Character::deleteEquipment(Item* item, int ItemID)		//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 		}
 	}
 
-	else if (ItemID == 1)										// ï¿½ï¿½î±¸ï¿½ï¿½ ï¿½ï¿½ï¿½	
+	else if (ItemID == 1)										// ï¿½ï¿½î±¸ï¿½ï¿?ï¿½ï¿½ï¿?
 	{
 		if (armourEquipment == nullptr)							
 		{
 			cout << "No equipment this parts" << endl;
 		}
-		else if (armourEquipment != nullptr)						 //ï¿½ï¿½î±¸ ï¿½Ê±ï¿½È­
+		else if (armourEquipment != nullptr)						 //ï¿½ï¿½î±?ï¿½Ê±ï¿½È­
 		{
-			armourEquipment = nullptr;								// ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½
+			armourEquipment = nullptr;								// ï¿½ï¿½î±?ï¿½ï¿½ï¿½ï¿½
 			removeStatus(item);										// ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 			
 				for (int i = 0; i < inventory.size(); i++)
@@ -221,11 +221,11 @@ void Character::buyItem(Item* item)											//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		cout << item->getItemName() << " bought for " << item->getPrice() << " gold." << endl;
 		inventory.push_back(item);
 		
-		if (item->getItemID() == 2) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		if (item->getItemID() == 2) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿?
 		{
 			potionBag.push_back(item);
 		}
-		else if (item->getItemID() == 0 || item->getItemID() == 1) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â³ª ï¿½ï¿½î±¸ï¿½ï¿½ ï¿½ï¿½ï¿½
+		else if (item->getItemID() == 0 || item->getItemID() == 1) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â³ª ï¿½ï¿½î±¸ï¿½ï¿?ï¿½ï¿½ï¿?
 		{
 			addEquipment(item, item->getItemID());
 		}
@@ -238,7 +238,7 @@ void Character::buyItem(Item* item)											//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 void Character::sellItem(Item* item)							// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½
 {
-	gold += item->getPrice();									// ï¿½ï¿½ï¿½ È¹ï¿½ï¿½
+	gold += item->getPrice();									// ï¿½ï¿½ï¿?È¹ï¿½ï¿½
 
 	if (item->getItemID() == 2)										//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	{        
@@ -248,7 +248,7 @@ void Character::sellItem(Item* item)							// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½
             potionBag.erase(potionIt);
         }
 	}
-	else if (item->getItemID() == 0 || item->getItemID() == 1)		 //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+	else if (item->getItemID() == 0 || item->getItemID() == 1)		 //ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½ï¿½ 
 	{
 		deleteEquipment(item, item->getItemID());				
 	}
@@ -280,7 +280,7 @@ void Character::addItem(Item* item)
 	cout << item->getItemName() << " added to bag" << endl;
 }
 
-void Character::useItem() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+void Character::useItem()
 {
 	if (potionBag.empty())
 	{
@@ -296,12 +296,11 @@ void Character::useItem() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		cout << "Select item to use: ";
 		cin >> selectItem;
 
-		addStatus(potionBag[selectItem]); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+		addStatus(potionBag[selectItem]); // ¾ÆÀÌÅÛ ´É·ÂÄ¡ Àû¿ë
 		cout << "you used" << potionBag[selectItem]->getItemName();
 		potionBag.erase(potionBag.begin() + selectItem);
 	}
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½ï¿½ÇºÎºï¿½
 }
 
 void Character::addGold(int amount)
