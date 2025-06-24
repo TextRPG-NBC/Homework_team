@@ -280,9 +280,8 @@ void Character::addItem(Item* item)
 	cout << item->getItemName() << " added to bag" << endl;
 }
 
-void Character::useItem() //������ ���
+void Character::useItem() 
 {
-	
 	if(!potionBag.empty())
 	{
 		int potionNum = rand() % potionBag.size();
@@ -290,8 +289,6 @@ void Character::useItem() //������ ���
 		cout << "you used" << potionBag[potionNum]->getItemName();
 		potionBag.erase(potionBag.begin() + potionNum);
 	}
-
-	//���� �� ���� �ɷ�ġ ��Ǻκ�
 }
 
 void Character::addGold(int amount)

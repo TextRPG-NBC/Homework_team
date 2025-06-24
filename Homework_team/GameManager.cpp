@@ -60,6 +60,9 @@ BossMonster* GameManager::generateBossMonster(int level)
 
 void GameManager::battle()
 {
+	// 아이템 사용
+	player->useItem();
+
 	Monster* newMonster = nullptr;
 	// 레벨 10 미만 시 일반 몬스터 소환
 	if (player->getLevel() < 10) 
@@ -74,9 +77,6 @@ void GameManager::battle()
 	}
 
 	assert(newMonster != nullptr);
-
-	// 아이템 사용
-	player->useItem();
 
 	// 전투 장면
 	while (1) {
@@ -270,7 +270,7 @@ void GameManager::getItemByBattle(Item* item)
 	if (RandValue <= ProbabilityToGetItem) 
 	{
 		cout << "----- 아이템 획득 -----" << endl;
-		player->addItem(new Item(*item));
+		player->addItem(item);
 	}
 }
 
