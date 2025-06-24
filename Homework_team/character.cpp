@@ -57,7 +57,7 @@ void Character::addExp(int amount)
 {
 	exp += amount;
 	cout << name << amount << " exp points up!" << endl;
-	if (exp >= 100)
+	if (exp >= 100)												//level up
 	{
 		exp = 0;
 		level++;
@@ -107,13 +107,13 @@ void Character::addEquipment(Item* item, int ItemID) // 0: 무기, 1: 방어구
         {  
             armourEquipment = item; // 새 방어구 장착  
             addStatus(item); // 새 방어구 능력치 적용  
-            cout << "you equip Armour " << item->getItemName() << endl;  
+            cout << "equip : " << item->getItemName() << endl;  
         }  
         else  
         {  
             removeStatus(armourEquipment); // 기존 방어구 능력치 제거  
             inventory.push_back(armourEquipment); // 기존 방어구를 인벤토리에 추가  
-            cout << "equipped " << armourEquipment->getItemName() << " put in bag" << endl;  
+            cout << "equipped : " << armourEquipment->getItemName() << " put in bag" << endl;  
             cout << "now you equip " << item->getItemName() << endl;  
             armourEquipment = item; // 새 방어구 장착  
             addStatus(item); // 새 방어구 능력치 적용  
@@ -180,6 +180,7 @@ void Character::addStatus(Item* item)
 {
 	attackPower += item->getAttackPower();
 	additionalHealth += item->getHealth();
+	health += item->getHealth();
 	criticalRate += item->getCritRate();
 }
 
