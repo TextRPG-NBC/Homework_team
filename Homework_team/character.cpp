@@ -92,7 +92,7 @@ void Character::addEquipment(Item* item, int ItemID) // 0: 무기, 1: 방어구
         }  
         else  
         {  
-            removeStatus(weaponEquipment); // 기존 무기 능력치 제거  
+			removeStatus(weaponEquipment); // 기존 무기 능력치 제거  
             inventory.push_back(weaponEquipment); // 기존 무기를 인벤토리에 추가  
             cout << "equipped " << weaponEquipment->getItemName() << " put in bag" << endl;  
             cout << "now you equip " << item->getItemName() << endl;  
@@ -125,9 +125,9 @@ void Character::addEquipment(Item* item, int ItemID) // 0: 무기, 1: 방어구
 }
 
 
-void Character::deleteEquipment(Item* item, int ItemID)				//장비 제거
+void Character::deleteEquipment(Item* item, int ItemID)		//장비 제거
 {
-	if (ItemID == 0) // 무기의 경우	
+	if (ItemID == 0)											// 무기의 경우	
 		{
 		if (weaponEquipment == nullptr)	
 		{
@@ -135,10 +135,22 @@ void Character::deleteEquipment(Item* item, int ItemID)				//장비 제거
 		}
 		else if (weaponEquipment != nullptr)						 
 		{
-			weaponEquipment = nullptr;								//장비 초기화
+			removeStatus(item);										// 능력치 제거
+			weaponEquipment = nullptr;								//무기 제거
+
+			for(int i = 0; i < inventory.size(); i++)
+				{
+				if (inventory[i]->getItemID() == 0)					// 인벤토리에서 무기 아이템 확인
+					{
+					weaponEquipment = inventory[i];
+					inventory.erase(inventory.begin()+i);					// 인벤토리에서 제거
+					addStatus(weaponEquipment);
+					break;
+					}
+				}
 		}
 	}
-	else if (ItemID == 1) // 방어구의 경우	
+	else if (ItemID == 1)										// 방어구의 경우	
 	{
 		if (armourEquipment == nullptr)							
 		{
@@ -146,8 +158,20 @@ void Character::deleteEquipment(Item* item, int ItemID)				//장비 제거
 		}
 		else if (armourEquipment != nullptr)						 //방어구 초기화
 		{
-			armourEquipment = nullptr;
-		}
+			armourEquipment = nullptr;								// 방어구 제거
+			removeStatus(item);										// 능력치 제거
+			
+				for (int i = 0; i < inventory.size(); i++)
+				{
+					if (inventory[i]->getItemID() == 1)					// 인벤토리에서 무기 아이템 확인
+					{
+						armourEquipment = inventory[i];
+						inventory.erase(inventory.begin()+i);					// 인벤토리에서 제거
+						addStatus(armourEquipment);
+						break;
+					}
+				}
+			}
 	}
 }
 
@@ -165,10 +189,17 @@ void Character::removeStatus(Item* item)
 	criticalRate -= item->getCritRate();
 }
 
-int Character::attack(Monster* target)
-{
-
-	return 0;
+int Character::attack(Character* player)
+{	
+	int damage = attackPower;
+	int critCheck = rand() % 100;
+	
+	if (critCheck < player->criticalRate )
+	{
+		damage *= 2;			// 크리티컬시 데미지 두 배
+	}
+	
+	return damage;
 }
 
 
@@ -246,24 +277,26 @@ void Character::addItem(Item* item)
 
 void Character::useItem() //아이템 사용
 {
-	if (inventory.empty())
+	if (potionBag.empty())
 	{
 		cout << "potion is empty!" << endl;
 	}
 	else
 	{
-		for (int i = 0; i <= inventory.size(); i++)
+		for (int i = 0; i <= potionBag.size(); i++)
 		{
-			cout << i << ". " << inventory[i]->getItemName() << endl;
+			cout << i << ". " << potionBag[i]->getItemName() << endl;
 		}
 		int selectItem;
 		cout << "Select item to use: ";
 		cin >> selectItem;
 
+		addStatus(potionBag[selectItem]); // 아이템 능력치 적용
 		potionBag.erase(potionBag.begin() + selectItem);
-		addStatus(item); // 아이템 능력치 적용
-		cout << "you used" << item->getItemName();
+		cout << "you used" << potionBag[selectItem]->getItemName();
 	}
+
+	//전투 후 포션 능력치 상실부분
 }
 
 void Character::addGold(int amount)

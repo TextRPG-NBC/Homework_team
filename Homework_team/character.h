@@ -27,7 +27,7 @@ public:
 	vector<Item*> inventoryInfo();
 	void addExp(int amount);
 
-	int attack(Monster* target);
+	int attack(Character* player);
 
 
 	//about battle 
@@ -40,20 +40,20 @@ public:
 	void deleteEquipment(Item* item, int ItemID);	
 
 	//about shop
-	void buyItem(Item* item);						// ¾ÆÀÌÅÛÀ» »ê °æ¿ì
-	void sellItem(Item* item);						// ¾ÆÀÌÅÛÀ» ÆÄ´Â °æ¿ì
+	void buyItem(Item* item);						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
+	void sellItem(Item* item);						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä´ï¿½ ï¿½ï¿½ï¿½
 
 	//item management
-	void addItem(Item* item);						// µå·ÓµÈ ¾ÆÀÌÅÛÀ» ÁÖ¿üÀ» ¶§, Àåºñ¶ó¸é ÀÚµ¿À¸·Î ¹Ù²î°í, ³ª¸ÓÁö´Â ÀÎº¥Åä¸®·Î
-	void useItem();						// »ç¿ë ¾ÆÀÌÅÛÀ» ·£´ýÀ¸·Î »ç¿ë
+	void addItem(Item* item);						// ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¿ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½
+	void useItem();						// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-	// °ñµå Ãß°¡
+	// ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 	void addGold(int amount);
 
-	// ÇÃ·¹ÀÌ¾î »óÅÂ º¯È­
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­
 	void setPlayerState(State state);
 
-	// ½ºÅÈ Á¤º¸ Getter
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Getter
 	string getName() 			 const	{ return name; }
 	int getLevel() 				 const	{ return level; }
 	int getExp() 				 const	{ return exp; }
@@ -68,18 +68,18 @@ public:
 	vector<Item*> getInventory()		{ return inventory; }
 
 private:
-	string name;					// ÀÌ¸§
-	int level;						// ·¹º§
-	int exp;						// °æÇèÄ¡
-	int health;						// Ã¼·Â
-	int attackPower;				// °ø°Ý·Â
-	int criticalRate;				// Å©¸®Æ¼ÄÃ È®·ü
-	int gold;						// ¼ÒÁö±Ý
-	void addStatus(Item* item);		// ¾ÆÀÌÅÛ È¿°ú Ãß°¡
-	void removeStatus(Item* item);	// ¾ÆÀÌÅÛ È¿°ú Á¦°Å
-	State playerState;				// ÇÃ·¹ÀÌ¾î »óÅÂ
-	Item* weaponEquipment;			// ¹«±â Æ÷ÀÎÅÍ
-	Item* armourEquipment;			// ¹æ¾î±¸ Æ÷ÀÎÅÍ
-	vector<Item*> potionBag;		// Æ÷¼Ç ÀÎº¥Åä¸®
-	vector<Item*> inventory;		// Àåºñ ÀÎº¥Åä¸®
+	string name;					// ï¿½Ì¸ï¿½
+	int level;						// ï¿½ï¿½ï¿½ï¿½
+	int exp;						// ï¿½ï¿½ï¿½ï¿½Ä¡
+	int health;						// Ã¼ï¿½ï¿½
+	int attackPower;				// ï¿½ï¿½ï¿½Ý·ï¿½
+	int criticalRate;				// Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½
+	int gold;						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	void addStatus(Item* item);		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ß°ï¿½
+	void removeStatus(Item* item);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	State playerState;				// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+	Item* weaponEquipment;			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	Item* armourEquipment;			// ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	vector<Item*> potionBag;		// ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®
+	vector<Item*> inventory;		// ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®
 };
