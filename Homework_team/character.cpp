@@ -1,5 +1,6 @@
 #include "character.h"
 #include "item.h"
+#include "Monster.h"
 
 using namespace std;
 
@@ -7,82 +8,68 @@ Character::Character(const string& name)
 	: name(name)
 	, level(0)
 	, exp(0)
-	, health(0)	
+	, health(0)
 	, attackPower(0)
 	, criticalRate(0)
 	, gold(0)
 	, playerState(State::ALIVE)
-{
-} 
+	{}
 
 void Character::displayInfo() const {											//캐릭터 정보
-    cout << "Name: " << name << endl;
-    cout << "Level: " << level << endl;
-    cout << "Experience: " << exp << endl;
-    cout << "Health: " << health << endl;
-    cout << "Attack Power: " << attackPower << endl;
-    cout << "Critical Rate: " << criticalRate << "%" << endl;
-    cout << "Have money : " << gold << endl;
+	cout << "Name: " << name << endl;
+	cout << "Level: " << level << endl;
+	cout << "Experience: " << exp << endl;
+	cout << "Health: " << health << endl;
+	cout << "Attack Power: " << attackPower << endl;
+	cout << "Critical Rate: " << criticalRate << "%" << endl;
+	cout << "Have money : " << gold << endl;
+}
 
-	if (equipment.empty()) {
-		cout << "equipment is empty!" << endl;									//장비가 없을 경우
-	}
-	else {
-		for (Item* item : inventory) {
-			cout << "equipment Item: " << item->itemName << endl;				 //보유한 장비 출력
-		}
+vector<Item> Character::invenrotoryInfo() // 인벤토리 리턴  
+{  
+    vector<Item> totalitems;  
+
+    if (weaponEquipment != nullptr)
+    {  
+        totalitems.push_back(*weaponEquipment);  
+    }  
+
+    if (armourEquipment != nullptr)
+    {  
+        totalitems.push_back(*armourEquipment);  
+    }  
+
+    for (const Item* item : inventory)
+    {  
+        totalitems.push_back(*item);
+    }  
+
+	for (const Item* item : potionBag)
+	{
+		totalitems.push_back(*item);
 	}
 
-	if (inventory.empty()) {
-		cout << "Inventory is empty!" << endl;									//장비가 없을 경우
-	} else {
-		for (Item* item : inventory) {
-			cout << "Inventory Item: " << item->itemName << endl;				 //보유한 장비 출력
-		}
-	}
-	
-	if (PotionBag.empty()) {													//소모품이 없을 경우
-		cout << "potion is empty!" << endl;
-	}
-	else {
-		for (Item* item : PotionBag) {
-			cout << "Potion Item: " << item->itemName << endl;				 //보유한 소모품 출력
-		}
-	}
+    return totalitems;  
 }
 
 
-void Character::gainExp(int amount)												//경험치 획득
+
+
+void Character::addExp(int amount)												//경험치 획득
 {
 	exp += amount;
 	cout << name << amount << " exp points up!" << endl;
-	levelUp();
-}
-
-void Character::levelUp()														//레벨업
-{
-	if (exp >= 100) {
+	if (exp >= 100)
+	{
 		exp = 0;
 		level++;
 		health = 180 + (level * 20);
 		attackPower = 25 + (level * 5);
 
-		cout << name << " is level up! current level : " << level << endl;
+		cout << name << " is level up! : " << level << endl;
 	}
 }
 
-
-void Character::attack(Character* target)
-{
-	int damage = attackPower;													//공격력 계산
-	if (rand() % 100 < criticalRate) {											//크리티컬 확률 적용
-		damage *= 2;															//크리티컬 히트 시 데미지 2배
-		cout << name << " landed a critical hit!" << endl;
-	}
-	////////////////////
-	target->takeDamage(damage);												//대상에게 데미지 적용
-	cout << name << " attacks " << target->name << " for " << damage << " damage." << endl;
-}
 
 void Character::takeDamage(int damage)
 {
@@ -97,111 +84,168 @@ void Character::takeDamage(int damage)
 	}
 }
 
-void Character::addEquipment(Item* item, int ItemID)							 // 0: 무기, 1: 방어구
-{
-	if (equipment[ItemID] == NULL)
-	{
-		equipment.at(ItemID) = item;										//새 장비 장착
-		addStatus(item);													//새 장비 능력치 적용
-		cout << "you equip Weapon" << item->itemName << endl;
-	}
-	else
-	{
-		deleteEquipment(equipment[ItemID], ItemID);							//구 장비 제거	
-		removeStatus(equipment[ItemID]);									//구 장비 능력치 제거
-		cout << "equiped " << equipment[ItemID]->itemName<< "put in bag" << endl;
-		cout << "now you equip " << item->itemName << endl;
-		equipment.at(ItemID) = item;										//새 장비 장착
-		addStatus(item);													//새 장비 능력치 적용 장착									
-	}
+void Character::addEquipment(Item* item, int ItemID) // 0: 무기, 1: 방어구  
+{  
+    if (ItemID == 0) // 무기 장착  
+    {  
+        if (weaponEquipment == nullptr)  
+        {  
+            weaponEquipment = item; // 새 무기 장착  
+            addStatus(item); // 새 무기 능력치 적용  
+            cout << "you equip Weapon " << item->getItemName() << endl;  
+        }  
+        else  
+        {  
+            removeStatus(weaponEquipment); // 기존 무기 능력치 제거  
+            inventory.push_back(weaponEquipment); // 기존 무기를 인벤토리에 추가  
+            cout << "equipped " << weaponEquipment->getItemName() << " put in bag" << endl;  
+            cout << "now you equip " << item->getItemName() << endl;  
+            weaponEquipment = item; // 새 무기 장착  
+            addStatus(item); // 새 무기 능력치 적용  
+        }  
+    }  
+    else if (ItemID == 1) // 방어구 장착  
+    {  
+        if (armourEquipment == nullptr)
+        {  
+            armourEquipment = item; // 새 방어구 장착  
+            addStatus(item); // 새 방어구 능력치 적용  
+            cout << "you equip Armour " << item->getItemName() << endl;  
+        }  
+        else  
+        {  
+            removeStatus(armourEquipment); // 기존 방어구 능력치 제거  
+            inventory.push_back(armourEquipment); // 기존 방어구를 인벤토리에 추가  
+            cout << "equipped " << armourEquipment->getItemName() << " put in bag" << endl;  
+            cout << "now you equip " << item->getItemName() << endl;  
+            armourEquipment = item; // 새 방어구 장착  
+            addStatus(item); // 새 방어구 능력치 적용  
+        }  
+    }  
+    else  
+    {  
+        cout << "Invalid equipment type." << endl;  
+    }  
 }
 
 
-void Character::deleteEquipment(Item* item, int position)					//장비 해제
+void Character::deleteEquipment(Item* item, int ItemID)				//장비 제거
 {
-	if (equipment[position] == NULL)										 //장비가 비어있으면 아무것도 하지 않음
-	{
-		cout << "No equipment this parts" << endl;
+	if (ItemID == 0) // 무기의 경우	
+		{
+		if (weaponEquipment == nullptr)	
+		{
+			cout << "No equipment this parts" << endl;
+		}
+		else if (weaponEquipment != nullptr)						 
+		{
+			weaponEquipment = nullptr;								//장비 초기화
+		}
 	}
-	else if (equipment[position] == item)									 //장비가 존재하면 인벤토리에 추가
+	else if (ItemID == 1) // 방어구의 경우	
 	{
-		inventory.push_back(equipment[position]);							//인벤토리에 창작했던 장비 추가		
-		equipment.erase(equipment.begin() + position);						 
-		cout << item->itemName << " removed from equipment." << endl;
-		cout << "equiped " << equipment[0]->itemName << "put in bag" << endl;
-		return;
+		if (armourEquipment == nullptr)							
+		{
+			cout << "No equipment this parts" << endl;
+		}
+		else if (armourEquipment != nullptr)						 //방어구 초기화
+		{
+			armourEquipment = nullptr;
+		}
 	}
-		
 }
 
 void Character::addStatus(Item* item)
 {
-	attackPower += item->attackPower_attribute;
-	health += item->health_attribute;
-	criticalRate += item->critRate_attribute;
-	cout << item->itemName << " added to equipment." << endl;
+	attackPower += item->getAttackPower();
+	health += item->getHealth();
+	criticalRate += item->getCritRate();
 }
 
 void Character::removeStatus(Item* item)
 {
-	attackPower -= item->attackPower_attribute;
-	health -= item->health_attribute;
-	criticalRate -= item->critRate_attribute;
-	cout << item->itemName << " removed from equipment." << endl;
+	attackPower -= item->getAttackPower();
+	health -= item->getHealth();
+	criticalRate -= item->getCritRate();
+}
+
+int Character::attack(Monster* target)
+{
+
+	return 0;
 }
 
 
 void Character::buyItem(Item* item)											//아이템 구매
 {
-	if (gold < item->price)
+	if (gold < item->getPrice())
 	{
-		cout << "Not enough gold to buy " << item->itemName << "." << endl;
-		return;
+		cout << "Not enough gold to buy " << item->getItemName() << "." << endl;
 	}
 	else
 	{
-		gold -= item->price;
-		cout << item->itemName << " bought for " << item->price << " gold." << endl;
-		inventory.push_back(item);											 //구매한 아이템을 인벤토리에 추가
+		gold -= item->getPrice();
+		cout << item->getItemName() << " bought for " << item->getPrice() << " gold." << endl;
+		inventory.push_back(item);
+		
+		if (item->getItemID() == 2) // 아이템이 포션인 경우
+		{
+			potionBag.push_back(item);
+		}
+		else if (item->getItemID() == 0 || item->getItemID() == 1) // 아이템이 무기나 방어구인 경우
+		{
+			addEquipment(item, item->getItemID());
+		}
+		else
+		{
+			cout << "error" << endl;
+		}
 	}
 }
 
-void Character::sellItem(Item* item)										 // 아이템 판매
+void Character::sellItem(Item* item)							// 아이템 판매
 {
-    gold += item->price;
-	if (item->itemID == 3) // 아이템이 nullptr인 경우 처리
-	{
-		PotionBag.erase(
-			remove_if(PotionBag.begin(), PotionBag.end(), [](const Item& item) {}));
+	gold += item->getPrice();									// 골드 획득
+
+	if (item->getItemID() == 2)										//포션 제거
+	{        auto potionIt = std::find(potionBag.begin(), potionBag.end(), item);
+        if (potionIt != potionBag.end())
+		{
+            potionBag.erase(potionIt);
+        }
 	}
-	else if (item->itemID == 0 || 1) // 아이템이 nullptr인 경우 처리
+	else if (item->getItemID() == 0 || item->getItemID() == 1)		 //장비 제거 
 	{
-		inventory.push_back(item); // 아이템을 인벤토리에 추가
-		inventory.erase(
-			remove_if(inventory.begin(), inventory.end(), [](const Item& item) {}));
+		deleteEquipment(item, item->getItemID());				
 	}
 	else
 	{
-		NULL; // 아이템이 nullptr인 경우 처리
+		NULL;
 	}
 }
 
-void Character::getItem(Item* item)
+
+
+void Character::addItem(Item* item)
 {
-	if (item->itemID == 3) // 아이템이 nullptr인 경우 처리
+	if (item->getItemID() == 2)
 	{
-		PotionBag.push_back(item);
+		potionBag.push_back(item);
 	}
-	else if (item->itemID == 0 || 1) // 아이템이 nullptr인 경우 처리
-	{	
-		inventory.push_back(item); // 아이템을 인벤토리에 추가
+	else if (item->getItemID() == 0 || item->getItemID() == 1) 
+	{
+		int itemIdCheck = item->getItemID();
+		if (itemIdCheck){
+			addEquipment(item, itemIdCheck);
+			inventory.push_back(item); // 아이템을 인벤토리에 추가
+		}
 	}
 	else
 	{
-		NULL; // 아이템이 nullptr인 경우 처리
+		NULL;
 	}
-	
-	cout << item->itemName << " added to bag" << endl;
+
+	cout << item->getItemName() << " added to bag" << endl;
 }
 
 void Character::useItem(Item* item) //아이템 사용
@@ -209,21 +253,20 @@ void Character::useItem(Item* item) //아이템 사용
 	if (inventory.empty())
 	{
 		cout << "potion is empty!" << endl;
-		return;
 	}
 	else
 	{
 		for (int i = 0; i <= inventory.size(); i++)
 		{
-			cout << i << ". " << inventory[i] << endl;
+			cout << i << ". " << inventory[i]->getItemName() << endl;
 		}
 		int selectItem;
 		cout << "Select item to use: ";
 		cin >> selectItem;
 
-		equipment.erase(equipment.begin() + selectItem);
+		potionBag.erase(potionBag.begin() + selectItem);
 		addStatus(item); // 아이템 능력치 적용
-		cout << "you used" << item->itemName;
+		cout << "you used" << item->getItemName();
 	}
 }
 
@@ -231,5 +274,3 @@ void Character::addGold(int amount)
 {
 	gold += amount;
 }
-
-
