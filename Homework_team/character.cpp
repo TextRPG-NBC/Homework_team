@@ -16,6 +16,7 @@ Character::Character(const string& name)
 	, playerState(State::ALIVE)
 	{}
 
+
 void Character::displayInfo() const {											//캐릭터 정보
 	cout << "Name: " << name << endl;
 	cout << "Level: " << level << endl;
@@ -151,6 +152,7 @@ void Character::deleteEquipment(Item* item, int ItemID)		//장비 제거
 				}
 		}
 	}
+
 	else if (ItemID == 1)										// 방어구의 경우	
 	{
 		if (armourEquipment == nullptr)							

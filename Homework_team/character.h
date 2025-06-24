@@ -66,7 +66,8 @@ public:
 
 private:
 	string name;					
-	int level;						
+	int level;
+	int additionalHealth;
 	int exp;						
 	int health;						
 	int attackPower;				
