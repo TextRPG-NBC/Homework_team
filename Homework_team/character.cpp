@@ -282,11 +282,8 @@ void Character::addItem(Item* item)
 
 void Character::useItem() //������ ���
 {
-	if (potionBag.empty())
-	{
-		cout << "potion is empty!" << endl;
-	}
-	else
+	
+	if(!potionBag.empty())
 	{
 		int potionNum = rand() % potionBag.size();
 		addStatus(potionBag[potionNum]); // ������ �ɷ�ġ ����
