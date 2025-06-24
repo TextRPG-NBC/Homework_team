@@ -8,17 +8,26 @@ private:
     string itemName;
     int itemID; // 0:公扁, 1 : 规绢备, 2 : 器记
     int attackPower_attribute;
-    int health_attribute;
+    int health_attribute; 
     int critRate_attribute;
     int price;
 
 public:
+    Item()
+        : itemName("None")
+        , itemID(-1)
+        , price(0)
+        , attackPower_attribute(0)
+        , health_attribute(0) 
+        , critRate_attribute(0)
+    {}
+
     Item(string name, int itemID, int price, int attackPower, int health, int critRate)
         : itemName(name)
-        , itemID(0)
+        , itemID(itemID)
         , price(price)
         , attackPower_attribute(attackPower)
-        , health_attribute(health)
+        , health_attribute(health) 
         , critRate_attribute(critRate) {}
 
     virtual ~Item() {}
