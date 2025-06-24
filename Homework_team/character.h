@@ -6,9 +6,11 @@ using namespace std;
 
 // Change 'class Item;' to 'struct Item;' to match the definition in shop.h
 class Item;
+class Monster;
 
 class Character
 {
+public:
 	enum State
 	{
 		ALIVE,
@@ -22,7 +24,7 @@ public:
 
 	//about character status
 	void displayInfo() const;
-	vector<Item> invenrotoryInfo();
+	vector<Item*> inventoryInfo();
 	void addExp(int amount);
 
 	int attack(Monster* target);
@@ -34,20 +36,22 @@ public:
 
 
 	//about equipment
-	void addEquipment(Item* item, int ItemID);
-	void deleteEquipment(Item* item, int ItemID);
+	void addEquipment(Item* item, int ItemID);		 
+	void deleteEquipment(Item* item, int ItemID);	
 
 	//about shop
-	void buyItem(Item* item);
-	void sellItem(Item* item);
-	
+	void buyItem(Item* item);						// 아이템을 산 경우
+	void sellItem(Item* item);						// 아이템을 파는 경우
 
 	//item management
-	void addItem(Item* item);
-	void useItem(Item* item);
+	void addItem(Item* item);						// 드롭된 아이템을 주웠을 때, 장비라면 자동으로 바뀌고, 나머지는 인벤토리로
+	void useItem();						// 사용 아이템을 랜덤으로 사용
 
 	// 골드 추가
 	void addGold(int amount);
+
+	// 플레이어 상태 변화
+	void setPlayerState(State state);
 
 	// 스탯 정보 Getter
 	string getName() 			 const	{ return name; }
@@ -57,12 +61,11 @@ public:
 	int getAttackPower() 		 const	{ return attackPower; }
 	int getCriticalRate() 		 const	{ return criticalRate; }
 	int getGold() 				 const	{ return gold; }
-	int getPlayerState() 		 const	{ return playerState; }
+	State getPlayerState() 		 const	{ return playerState; }
 	Item* getWeaponEquipment()			{ return weaponEquipment; }
 	Item* getArmourEquipment()			{ return armourEquipment; }
 	vector<Item*> getPotionBag()		{ return potionBag; }
 	vector<Item*> getInventory()		{ return inventory; }
-
 
 private:
 	string name;					// 이름

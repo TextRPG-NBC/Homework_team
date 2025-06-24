@@ -2,13 +2,15 @@
 
 #include "CommonInclude.h"
 
+class Item;
+
 class Monster {
 public:
-	~Monster() {}
+	~Monster();
 
 	void takeDamage(int damage);
 	void displayMonster();
-	// Todo : 아이템 떨어뜨리는 로직 작성
+	Item* dropItem();
 
 	std::string getName() const { return name; }
 	int getHealth() const { return health; };
@@ -18,4 +20,5 @@ protected:
 	std::string name;
 	int health;
 	int attack;
+	Item* item;
 };

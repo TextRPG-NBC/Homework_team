@@ -1,5 +1,5 @@
 #include "character.h"
-#include "item.h"
+#include "Item.h"
 #include "Monster.h"
 
 using namespace std;
@@ -25,35 +25,32 @@ void Character::displayInfo() const {											//캐릭터 정보
 	cout << "Have money : " << gold << endl;
 }
 
-vector<Item> Character::invenrotoryInfo() // 인벤토리 리턴  
+vector<Item*> Character::inventoryInfo() // 인벤토리 리턴  
 {  
-    vector<Item> totalitems;  
+    vector<Item*> totalitems;  
 
     if (weaponEquipment != nullptr)
     {  
-        totalitems.push_back(*weaponEquipment);  
+        totalitems.push_back(weaponEquipment);  
     }  
 
     if (armourEquipment != nullptr)
     {  
-        totalitems.push_back(*armourEquipment);  
+        totalitems.push_back(armourEquipment);  
     }  
 
-    for (const Item* item : inventory)
+    for (Item* item : inventory)
     {  
-        totalitems.push_back(*item);
+        totalitems.push_back(item);
     }  
 
-	for (const Item* item : potionBag)
+	for (Item* item : potionBag)
 	{
-		totalitems.push_back(*item);
+		totalitems.push_back(item);
 	}
 
     return totalitems;  
 }
-
-
-
 
 void Character::addExp(int amount)												//경험치 획득
 {
@@ -69,7 +66,6 @@ void Character::addExp(int amount)												//경험치 획득
 		cout << name << " is level up! : " << level << endl;
 	}
 }
-
 
 void Character::takeDamage(int damage)
 {
@@ -248,7 +244,7 @@ void Character::addItem(Item* item)
 	cout << item->getItemName() << " added to bag" << endl;
 }
 
-void Character::useItem(Item* item) //아이템 사용
+void Character::useItem() //아이템 사용
 {
 	if (inventory.empty())
 	{
@@ -273,4 +269,9 @@ void Character::useItem(Item* item) //아이템 사용
 void Character::addGold(int amount)
 {
 	gold += amount;
+}
+
+void Character::setPlayerState(State state)
+{
+	playerState = state;
 }

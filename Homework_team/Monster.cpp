@@ -1,4 +1,11 @@
 #include "Monster.h"
+#include "Item.h"
+#include "ItemManager.h"
+
+Monster::~Monster()
+{
+	delete item;
+}
 
 void Monster::takeDamage(int damage)
 {
@@ -17,4 +24,9 @@ void Monster::displayMonster()
 	std::cout << "몬스터 " << this->name << " 등장!";
 	std::cout << "체력: " << this->health;
 	std::cout << ", 공격력: " << this->attack << std::endl;
+}
+
+Item* Monster::dropItem()
+{
+	return item;
 }

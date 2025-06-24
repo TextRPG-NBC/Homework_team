@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
-#include <iostream>
+#include "CommonInclude.h"
+
 using namespace std;
 
 class Item {
@@ -29,7 +29,13 @@ public:
         , attackPower_attribute(attackPower)
         , health_attribute(health) 
         , critRate_attribute(critRate) {}
-
+    Item(const Item& item)
+        : itemName(item.itemName)
+        , itemID(item.itemID)
+        , price(item.price)
+        , attackPower_attribute(item.attackPower_attribute)
+        , health_attribute(item.health_attribute)
+        , critRate_attribute(item.critRate_attribute) {}
     virtual ~Item() {}
 
     // Getter

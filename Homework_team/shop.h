@@ -2,24 +2,20 @@
 
 #include "CommonInclude.h"
 
+class Item;
 class Character;
-
-struct Item {
-	std::string name;
-	std::string increateStat;
-	int amountOfIncreateStat;
-	int price;
-};
 
 class Shop
 {
 public:
 	Shop();
+	~Shop();
 	void displayItems();
 	void buyItem(int index, Character* player);
 	void sellItem(int index, Character* player);
+	void fillItem(std::vector<Item*> items);
 
 private:
-	std::vector<Item> availableItems;
+	std::vector<Item*> availableItems;
 };
 

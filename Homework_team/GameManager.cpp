@@ -2,6 +2,26 @@
 #include "Monster.h"
 #include "MonsterTypes.h"
 #include "character.h"
+#include "ItemManager.h"
+#include "Shop.h"
+
+GameManager::GameManager()
+	: ExperienceToReceive(50)
+	, GoldToReceive(0)
+	, ProbabilityToGetItem(30)
+	, player(nullptr)
+{
+	itemManager = new ItemManager();
+	shopManager = new Shop();
+	shopManager->fillItem(itemManager->getItemListVector());
+}
+
+GameManager::~GameManager()
+{
+	delete player;
+	delete shopManager;
+	delete itemManager;
+}
 
 Monster* GameManager::generateMonster(int level)
 {
@@ -9,18 +29,19 @@ Monster* GameManager::generateMonster(int level)
 	int RandomValue = RandomUtil::getInt(0, NumberOfMonster - 1);
 
 	Monster* newMonster = nullptr;
+	Item* item = itemManager->getRandomItem();
 
 	if (RandomValue == 0)
 	{
-		newMonster = new Goblin(level);
+		newMonster = new Goblin(level, item);
 	}
 	else if (RandomValue == 1)
 	{
-		newMonster = new Orc(level);
+		newMonster = new Orc(level, item);
 	}
 	else if (RandomValue == 2)
 	{
-		newMonster = new Troll(level);
+		newMonster = new Troll(level, item);
 	}
 	newMonster->displayMonster();
 
@@ -29,16 +50,16 @@ Monster* GameManager::generateMonster(int level)
 
 BossMonster* GameManager::generateBossMonster(int level)
 {
-	BossMonster* newBossMonster = new BossMonster(level);
+	Item* item = itemManager->getRandomItem();
+
+	BossMonster* newBossMonster = new BossMonster(level, item);
 	newBossMonster->displayMonster();
 
 	return newBossMonster;
 }
 
-bool GameManager::battle(Character* player)
+void GameManager::battle()
 {
-	bool IsCharacterDead = false;
-	
 	Monster* newMonster = nullptr;
 	// 레벨 10 미만 시 일반 몬스터 소환
 	if (player->getLevel() < 10) 
@@ -49,9 +70,13 @@ bool GameManager::battle(Character* player)
 	else
 	{
 		newMonster = generateBossMonster(player->getLevel());
+		player->setPlayerState(Character::State::CLEAR);
 	}
 
 	assert(newMonster != nullptr);
+
+	// 아이템 사용
+	player->useItem();
 
 	// 전투 장면
 	while (1) {
@@ -78,7 +103,6 @@ bool GameManager::battle(Character* player)
 		if (player->getHealth() <= 0) 
 		{
 			cout << player->getName() << " 체력: 0" << endl;
-			IsCharacterDead = true;
 			break;
 		}
 		else 
@@ -88,33 +112,109 @@ bool GameManager::battle(Character* player)
 	}
 
 	// 전투 승리 -> 경험치, 골드 획득 (+ 랜덤 아이템 획득)
-	if (!IsCharacterDead) 
+	if (player->getPlayerState() == Character::State::ALIVE) 
 	{
-		getItemByBattle(player);
+		getItemByBattle(newMonster->dropItem());
 	}
 
 	delete newMonster;
-
-	return IsCharacterDead;
 }
 
-void GameManager::visitShop(Character* player)
+void GameManager::visitShop()
 {
 	cout << " === 상점을 방문하였습니다 === \n";
-	//TODO : 상점 방문 부분 추가
+
+	// 구매 가능한 아이템 출력
+	shopManager->displayItems();
+
+	// 캐릭터 보유 골드 출력
+	cout << "골드: " << player->getGold() << "\n";
+
+	// 구매할 아이템 번호 선택
+	int BuyItemNumber = 0;
+	cout << "구매할 아이템 번호를 선택하세요(0:넘어가기): ";
+	cin >> BuyItemNumber;
+
+	if (BuyItemNumber != 0)
+	{
+		shopManager->buyItem(BuyItemNumber, player);
+	}
 }
 
-void GameManager::displayInventory(Character* player)
+void GameManager::displayInventory()
 {
 	cout << " === 현재 플레이어가 가지고 있는 아이템 === \n";
-	// TODO : 인벤토리 출력 기능
+	vector<Item*> items = player->inventoryInfo();
+
+	for (size_t i = 0; i < items.size(); i++)
+	{
+		Item* item = items[i];
+		std::cout << i << ". " << item->getItemName();
+		if (item->getAttackPower() > 0)
+		{
+			std::cout << " (공격력 + " << item->getAttackPower() << ")";
+		}
+		else if (item->getCritRate() > 0)
+		{
+			std::cout << " (크리티컬 확률 + " << item->getCritRate() << ")";
+		}
+		else if (item->getHealth() > 0)
+		{
+			std::cout << " (체력 + " << item->getHealth() << ")";
+		}
+
+		std::cout << ": " << item->getPrice() << " 골드\n";
+	}
 }
 
-void GameManager::getItemByBattle(Character* player)
+void GameManager::run()
+{
+	getPlayerName();
+
+	while (1) {
+		system("cls");
+		
+		// 플레이어 스택 출력
+		player->displayInfo();
+		// 전투하기
+		battle();
+
+		// 1. 전투 승리 -> 상점 시스템 -> 다음 전투
+		if (player->getPlayerState() == Character::State::ALIVE)
+		{
+			// 상점 시스템
+			string IsShopping;
+			cout << "상점을 방문하시겠습니까? (Y/N): ";
+			cin >> IsShopping;
+
+			if (IsShopping == "Y" || IsShopping == "y")
+			{
+				visitShop();
+			}
+
+			system("pause");
+		}
+		// 2. 캐릭터 사망 -> 게임 종료
+		else if (player->getPlayerState() == Character::State::DEAD)
+		{
+			cout << player->getName() << "가 사망했습니다. 게임 오버!\n";
+			break;
+		}
+		// 3. 보스 몬스터 처치
+		else if (player->getPlayerState() == Character::State::CLEAR)
+		{
+			cout << "축하합니다! 보스 몬스터를 처치하고 게임을 클리어했습니다!\n";
+			break;
+		}
+	}
+
+}
+
+void GameManager::getItemByBattle(Item* item)
 {
 	GoldToReceive = RandomUtil::getInt(10, 20);	// 10 ~ 20 골드 랜덤 획득
 
-	player->gainExp(ExperienceToReceive);
+	player->addExp(ExperienceToReceive);
 	player->addGold(GoldToReceive);
 
 	cout << player->getName() << "가 " << ExperienceToReceive << " EXP와 " << GoldToReceive << " 골드를 획득했습니다. ";
@@ -124,6 +224,23 @@ void GameManager::getItemByBattle(Character* player)
 	if (RandValue <= ProbabilityToGetItem) 
 	{
 		cout << "----- 아이템 획득 -----" << endl;
+		player->addItem(new Item(*item));
 	}
+}
 
+void GameManager::getPlayerName()
+{
+	// 캐릭터 생성 (이름 입력)
+	string PlayerName;
+	cout << "캐릭터 이름을 입력하세요: ";
+	getline(cin, PlayerName);
+
+	do {
+		if (PlayerName != "")	// 입력 유효성 검사
+			break;
+		cin.ignore();
+		cout << "캐릭터 이름을 재입력하세요: ";
+	} while (getline(cin, PlayerName));
+
+	player = new Character(PlayerName);
 }

@@ -1,15 +1,18 @@
 #pragma once
 
-#include "item.h"
-#include <vector>
+#include "CommonInclude.h"
 
+class Item;
 
 class ItemManager
 {
-private:
-	vector<Item*> itemVector;
-
 public:
-	vector<Item*> getItemListVector();
-	Item* randomItem();
+	ItemManager();
+	~ItemManager();
+
+	std::vector<Item*> getItemListVector();
+	Item* getRandomItem();
+
+private:
+	std::vector<Item*> itemVector;
 };
