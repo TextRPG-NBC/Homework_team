@@ -1,5 +1,6 @@
 #pragma once
 #include "CommonInclude.h"
+#include "Item.h"
 
 class Monster;
 class BossMonster;
@@ -18,7 +19,7 @@ public:
 	BossMonster* generateBossMonster(int level);
 	void battle();
 	void visitShop();
-	void displayInventory();
+	vector<Item*> displayInventory();
 	void run();
 
 private:

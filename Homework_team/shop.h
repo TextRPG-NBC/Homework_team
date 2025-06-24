@@ -12,7 +12,7 @@ public:
 	~Shop();
 	void displayItems();
 	void buyItem(int index, Character* player);
-	void sellItem(int index, Character* player);
+	void sellItem(Item* item, Character* player);
 	void fillItem(std::vector<Item*> items);
 
 private:

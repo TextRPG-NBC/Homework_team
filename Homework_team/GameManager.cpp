@@ -82,7 +82,7 @@ void GameManager::battle()
 	while (1) {
 		// 플레이어가 몬스터 공격
 		cout << player->getName() << "이(가) " << newMonster->getName() << "을 공격합니다! ";
-		newMonster->takeDamage(player->getAttackPower());
+		newMonster->takeDamage(player->attack(player));
 
 		// 몬스터 처치
 		if (newMonster->getHealth() <= 0) 
@@ -123,61 +123,107 @@ void GameManager::battle()
 void GameManager::visitShop()
 {
 	cout << " === 상점을 방문하였습니다 === \n";
+	cout << "  1. 구매\n";
+	cout << "  2. 판매\n";
+	cout << "  3. 넘어가기\n";
+	cout << " =========================== \n";
+	cout << "상점에서 하실 일을 골라주세요.(1:구매, 2:판매): ";
+	
+	int selectNum;
+	cin >> selectNum;
 
-	// 구매 가능한 아이템 출력
-	shopManager->displayItems();
+	if (selectNum == 1) 
+	{	
+		// 구매 가능한 아이템 출력
+		shopManager->displayItems();
 
-	// 캐릭터 보유 골드 출력
-	cout << "골드: " << player->getGold() << "\n";
+		// 캐릭터 보유 골드 출력
+		cout << "골드: " << player->getGold() << "\n";
 
-	// 구매할 아이템 번호 선택
-	int BuyItemNumber = 0;
-	cout << "구매할 아이템 번호를 선택하세요(0:넘어가기): ";
-	cin >> BuyItemNumber;
+		// 구매할 아이템 번호 선택
+		int BuyItemNumber = 0;
+		cout << "구매할 아이템 번호를 선택하세요(0:넘어가기): ";
+		cin >> BuyItemNumber;
 
-	if (BuyItemNumber != 0)
-	{
-		shopManager->buyItem(BuyItemNumber, player);
+		if (BuyItemNumber != 0)
+		{
+			shopManager->buyItem(BuyItemNumber, player);
+		}
 	}
+	else if (selectNum == 2)
+	{
+		// 캐릭터가 보유한 인벤토리 출력
+		vector<Item*> items = displayInventory();
+
+		// 판매할 아이템 번호 선택
+		int SellItemNumber = 0;
+		cout << "판매할 아이템 번호를 선택하세요(0:넘어가기): ";
+		cin >> SellItemNumber;
+
+		if (SellItemNumber != 0)
+		{
+			player->sellItem(items[SellItemNumber - 1]);
+		}
+	}
+
 }
 
-void GameManager::displayInventory()
+vector<Item*> GameManager::displayInventory()
 {
 	cout << " === 현재 플레이어가 가지고 있는 아이템 === \n";
 	vector<Item*> items = player->inventoryInfo();
 
-	for (size_t i = 0; i < items.size(); i++)
+	if (items.size() > 0)
 	{
-		Item* item = items[i];
-		std::cout << i << ". " << item->getItemName();
-		if (item->getAttackPower() > 0)
+		for (size_t i = 0; i < items.size(); i++)
 		{
-			std::cout << " (공격력 + " << item->getAttackPower() << ")";
-		}
-		else if (item->getCritRate() > 0)
-		{
-			std::cout << " (크리티컬 확률 + " << item->getCritRate() << ")";
-		}
-		else if (item->getHealth() > 0)
-		{
-			std::cout << " (체력 + " << item->getHealth() << ")";
-		}
+			Item* item = items[i];
+			std::cout << i + 1 << ". " << item->getItemName();
+			if (item->getAttackPower() > 0)
+			{
+				std::cout << " (공격력 + " << item->getAttackPower() << ")";
+			}
+			else if (item->getCritRate() > 0)
+			{
+				std::cout << " (크리티컬 확률 + " << item->getCritRate() << ")";
+			}
+			else if (item->getHealth() > 0)
+			{
+				std::cout << " (체력 + " << item->getHealth() << ")";
+			}
 
-		std::cout << ": " << item->getPrice() << " 골드\n";
+			std::cout << ": " << item->getPrice() << " 골드\n";
+		}
 	}
+	else
+	{
+		std::cout << "현재 가진 아이템이 없습니다.\n";
+	}
+
+	std::cout << " =========================================\n ";
+
+	return items;
 }
 
 void GameManager::run()
 {
 	getPlayerName();
 
+	// 플레이어 스탯 출력
+	player->displayInfo();
+	system("pause");
+
 	while (1) {
 		system("cls");
 		
-		// 플레이어 스탯 출력
-		player->displayInfo();
 		// 전투하기
 		battle();
+
+		// 플레이어 스탯 출력
+		player->displayInfo();
+
+		// 플레이어 인벤토리 출력
+		displayInventory();
 
 		// 1. 전투 승리 -> 상점 시스템 -> 다음 전투
 		if (player->getPlayerState() == Character::State::ALIVE)
@@ -243,4 +289,7 @@ void GameManager::getPlayerName()
 	} while (getline(cin, PlayerName));
 
 	player = new Character(PlayerName);
+	system("cls");
+
+	cout << "===== 캐릭터 생성 완료 =====\n";
 }

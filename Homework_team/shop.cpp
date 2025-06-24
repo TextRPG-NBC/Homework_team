@@ -9,10 +9,6 @@ Shop::Shop()
 
 Shop::~Shop()
 {
-	for (Item* item : availableItems) 
-	{
-		delete item;
-	}
 }
 
 void Shop::displayItems()
@@ -47,25 +43,18 @@ void Shop::buyItem(int index, Character* player)
 		return;
 	}
 
-	
-	// TODO
-	// 1. 캐릭터 인벤토리에 추가
-	// 2. 아이템 구매에 따른 스탯 상승
-
-	std::cout << availableItems[index - 1]->getItemName() << "을 구매했습니다!\n";
+	player->buyItem(availableItems[index]);
 }
 
-void Shop::sellItem(int index, Character* player)
+void Shop::sellItem(Item* item, Character* player)
 {
-	// TODO
-	// 1. 캐릭터 인벤토리 구현 후 판매
+	player->sellItem(item);
 }
 
 void Shop::fillItem(std::vector<Item*> items)
 {
 	for (Item* item : items)
 	{
-		availableItems.push_back(new Item(item->getItemName(), item->getItemID()
-				, item->getPrice(), item->getAttackPower(), item->getHealth(), item->getCritRate()));
+		availableItems.push_back(item);
 	}
 }
