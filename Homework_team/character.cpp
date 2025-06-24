@@ -6,14 +6,16 @@ using namespace std;
 
 Character::Character(const string& name)
 	: name(name)
-	, level(0)
+	, level(1)
+	, additionalHealth(0)
 	, exp(0)
-	, health(0)
-	, attackPower(0)
+	, health(200)
+	, attackPower(30)
 	, criticalRate(0)
 	, gold(0)
 	, playerState(State::ALIVE)
 	{}
+
 
 void Character::displayInfo() const {											//캐릭터 정보
 	cout << "Name: " << name << endl;
@@ -56,11 +58,11 @@ void Character::addExp(int amount)
 {
 	exp += amount;
 	cout << name << amount << " exp points up!" << endl;
-	if (exp >= 100)
+	if (exp >= 100)												//level up
 	{
 		exp = 0;
 		level++;
-		health = 180 + (level * 20);
+		health = 180 + (level * 20) + additionalHealth;
 		attackPower = 25 + (level * 5);
 
 		cout << name << " is level up! : " << level << endl;
@@ -106,13 +108,13 @@ void Character::addEquipment(Item* item, int ItemID) // 0: 무기, 1: 방어구
         {  
             armourEquipment = item; // 새 방어구 장착  
             addStatus(item); // 새 방어구 능력치 적용  
-            cout << "you equip Armour " << item->getItemName() << endl;  
+            cout << "equip : " << item->getItemName() << endl;  
         }  
         else  
         {  
             removeStatus(armourEquipment); // 기존 방어구 능력치 제거  
             inventory.push_back(armourEquipment); // 기존 방어구를 인벤토리에 추가  
-            cout << "equipped " << armourEquipment->getItemName() << " put in bag" << endl;  
+            cout << "equipped : " << armourEquipment->getItemName() << " put in bag" << endl;  
             cout << "now you equip " << item->getItemName() << endl;  
             armourEquipment = item; // 새 방어구 장착  
             addStatus(item); // 새 방어구 능력치 적용  
@@ -150,6 +152,7 @@ void Character::deleteEquipment(Item* item, int ItemID)		//장비 제거
 				}
 		}
 	}
+
 	else if (ItemID == 1)										// 방어구의 경우	
 	{
 		if (armourEquipment == nullptr)							
@@ -178,6 +181,7 @@ void Character::deleteEquipment(Item* item, int ItemID)		//장비 제거
 void Character::addStatus(Item* item)
 {
 	attackPower += item->getAttackPower();
+	additionalHealth += item->getHealth();
 	health += item->getHealth();
 	criticalRate += item->getCritRate();
 }
