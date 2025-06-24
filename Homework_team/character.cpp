@@ -6,13 +6,15 @@ using namespace std;
 
 Character::Character(const string& name)
 	: name(name)
-	, level(0)
+	, level(1)
 	, exp(0)
-	, health(0)
-	, attackPower(0)
+	, health(200)
+	, attackPower(30)
 	, criticalRate(0)
 	, gold(0)
 	, playerState(State::ALIVE)
+	, weaponEquipment(nullptr)
+	, armourEquipment(nullptr)
 	{}
 
 void Character::displayInfo() const {											//캐릭터 정보
@@ -235,7 +237,8 @@ void Character::sellItem(Item* item)							// 아이템 판매
 	gold += item->getPrice();									// 골드 획득
 
 	if (item->getItemID() == 2)										//포션 제거
-	{        auto potionIt = std::find(potionBag.begin(), potionBag.end(), item);
+	{        
+		auto potionIt = std::find(potionBag.begin(), potionBag.end(), item);
         if (potionIt != potionBag.end())
 		{
             potionBag.erase(potionIt);
@@ -250,8 +253,6 @@ void Character::sellItem(Item* item)							// 아이템 판매
 		NULL;
 	}
 }
-
-
 
 void Character::addItem(Item* item)
 {
@@ -283,7 +284,7 @@ void Character::useItem() //아이템 사용
 	}
 	else
 	{
-		for (int i = 0; i <= potionBag.size(); i++)
+		for (int i = 0; i < potionBag.size(); i++)
 		{
 			cout << i << ". " << potionBag[i]->getItemName() << endl;
 		}
@@ -292,8 +293,8 @@ void Character::useItem() //아이템 사용
 		cin >> selectItem;
 
 		addStatus(potionBag[selectItem]); // 아이템 능력치 적용
-		potionBag.erase(potionBag.begin() + selectItem);
 		cout << "you used" << potionBag[selectItem]->getItemName();
+		potionBag.erase(potionBag.begin() + selectItem);
 	}
 
 	//전투 후 포션 능력치 상실부분

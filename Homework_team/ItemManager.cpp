@@ -1,8 +1,6 @@
 #include "ItemManager.h"
 #include "Item.h"
 
-// ���� : �̸�, ������ID(0:����, 1:��, 2:����), ����, ���ݷ�, ü��, ũ��Ƽ�� Ȯ��
-
 
 ItemManager::ItemManager()
 {
