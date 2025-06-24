@@ -288,17 +288,10 @@ void Character::useItem() //������ ���
 	}
 	else
 	{
-		for (int i = 0; i < potionBag.size(); i++)
-		{
-			cout << i << ". " << potionBag[i]->getItemName() << endl;
-		}
-		int selectItem;
-		cout << "Select item to use: ";
-		cin >> selectItem;
-
-		addStatus(potionBag[selectItem]); // ������ �ɷ�ġ ����
-		cout << "you used" << potionBag[selectItem]->getItemName();
-		potionBag.erase(potionBag.begin() + selectItem);
+		int potionNum = rand() % potionBag.size();
+		addStatus(potionBag[potionNum]); // ������ �ɷ�ġ ����
+		cout << "you used" << potionBag[potionNum]->getItemName();
+		potionBag.erase(potionBag.begin() + potionNum);
 	}
 
 	//���� �� ���� �ɷ�ġ ��Ǻκ�
