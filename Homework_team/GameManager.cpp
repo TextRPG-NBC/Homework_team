@@ -110,6 +110,7 @@ void GameManager::battle()
 			cout << player->getName() << " 체력: " << player->getHealth() << endl;
 		}
 	}
+	cout << endl;
 
 	// 전투 승리 -> 경험치, 골드 획득 (+ 랜덤 아이템 획득)
 	if (player->getPlayerState() == Character::State::ALIVE) 
@@ -122,12 +123,12 @@ void GameManager::battle()
 
 void GameManager::visitShop()
 {
-	cout << " === 상점을 방문하였습니다 === \n";
-	cout << "  1. 구매\n";
-	cout << "  2. 판매\n";
-	cout << "  3. 넘어가기\n";
-	cout << " =========================== \n";
-	cout << "상점에서 하실 일을 골라주세요.(1:구매, 2:판매): ";
+	cout << " ===== 상점에 오신 것을 환영합니다! ===== \n";
+	cout << "   1. 구매\n";
+	cout << "   2. 판매\n";
+	cout << "   3. 넘어가기\n";
+	cout << " ====================================== \n";
+	cout << " 상점에서 하실 일을 골라주세요 (1:구매, 2:판매): ";
 	
 	int selectNum;
 	cin >> selectNum;
@@ -138,11 +139,11 @@ void GameManager::visitShop()
 		shopManager->displayItems();
 
 		// 캐릭터 보유 골드 출력
-		cout << "골드: " << player->getGold() << "\n";
+		cout << " 보유 골드: " << player->getGold() << "\n";
 
 		// 구매할 아이템 번호 선택
 		int BuyItemNumber = 0;
-		cout << "구매할 아이템 번호를 선택하세요(0:넘어가기): ";
+		cout << "구매할 아이템 번호를 선택하세요 (0:넘어가기): ";
 		cin >> BuyItemNumber;
 
 		if (BuyItemNumber != 0)
@@ -155,14 +156,17 @@ void GameManager::visitShop()
 		// 캐릭터가 보유한 인벤토리 출력
 		vector<Item*> items = displayInventory();
 
-		// 판매할 아이템 번호 선택
-		int SellItemNumber = 0;
-		cout << "판매할 아이템 번호를 선택하세요(0:넘어가기): ";
-		cin >> SellItemNumber;
-
-		if (SellItemNumber != 0)
+		if (items.size() > 0)
 		{
-			player->sellItem(items[SellItemNumber - 1]);
+			// 판매할 아이템 번호 선택
+			int SellItemNumber = 0;
+			cout << "판매할 아이템 번호를 선택하세요 (0:넘어가기): ";
+			cin >> SellItemNumber;
+
+			if (SellItemNumber != 0 && SellItemNumber <= items.size())
+			{
+				player->sellItem(items[SellItemNumber - 1]);
+			}
 		}
 	}
 
@@ -170,7 +174,7 @@ void GameManager::visitShop()
 
 vector<Item*> GameManager::displayInventory()
 {
-	cout << " === 현재 플레이어가 가지고 있는 아이템 === \n";
+	cout << " ===== 현재 플레이어가 가지고 있는 아이템 ===== \n";
 	vector<Item*> items = player->inventoryInfo();
 
 	if (items.size() > 0)
@@ -197,10 +201,10 @@ vector<Item*> GameManager::displayInventory()
 	}
 	else
 	{
-		std::cout << "현재 가진 아이템이 없습니다.\n";
+		std::cout << "        - 현재 가진 아이템이 없습니다 -\n";
 	}
 
-	std::cout << " =========================================\n ";
+	std::cout << " ==============================================\n\n ";
 
 	return items;
 }
@@ -243,7 +247,7 @@ void GameManager::run()
 		// 2. 캐릭터 사망 -> 게임 종료
 		else if (player->getPlayerState() == Character::State::DEAD)
 		{
-			cout << player->getName() << "가 사망했습니다. 게임 오버!\n";
+			cout << player->getName() << "이(가) 사망했습니다. 게임 오버!\n";
 			break;
 		}
 		// 3. 보스 몬스터 처치
@@ -269,8 +273,8 @@ void GameManager::getItemByBattle(Item* item)
 	int RandValue = RandomUtil::getInt(1, 100);
 	if (RandValue <= ProbabilityToGetItem) 
 	{
-		cout << "----- 아이템 획득 -----" << endl;
 		player->addItem(item);
+		cout << player->getName() << "이(가) " << item->getItemName() << "을 획득했습니다!!!" << endl;
 	}
 }
 

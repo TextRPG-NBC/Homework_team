@@ -32,6 +32,6 @@ vector<Item*> ItemManager::getItemListVector()
 
 Item* ItemManager::getRandomItem()
 {
-    int randomIndex = RandomUtil::getInt(0, itemVector.size());
+    int randomIndex = RandomUtil::getInt(0, itemVector.size() - 1);
     return itemVector[randomIndex];
 }

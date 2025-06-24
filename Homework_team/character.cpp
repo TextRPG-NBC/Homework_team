@@ -22,11 +22,11 @@ Character::Character(const string& name)
 void Character::displayInfo() const {											//ĳ���� ����
 	cout << "Name: " << name << endl;
 	cout << "Level: " << level << endl;
-	cout << "Experience: " << exp << endl;
-	cout << "Health: " << health << endl;
-	cout << "Attack Power: " << attackPower << endl;
+	cout << "Exp: " << exp << endl;
+	cout << "Hp: " << health << endl;
+	cout << "Attack: " << attackPower << endl;
 	cout << "Critical Rate: " << criticalRate << "%" << endl;
-	cout << "Have money : " << gold << endl << endl;
+	cout << "Deposit: " << gold << endl << endl;
 }
 
 vector<Item*> Character::inventoryInfo() // �κ��丮 ����  
@@ -59,7 +59,6 @@ vector<Item*> Character::inventoryInfo() // �κ��丮 ����
 void Character::addExp(int amount)	
 {
 	exp += amount;
-	cout << name << amount << " exp points up!" << endl;
 	if (exp >= 100)												//level up
 	{
 		exp = 0;
@@ -67,7 +66,7 @@ void Character::addExp(int amount)
 		health = 180 + (level * 20) + additionalHealth;
 		attackPower = 25 + (level * 5);
 
-		cout << name << " is level up! : " << level << endl;
+		cout << "Level Up!(" << level - 1 << " -> " << level << ")" << endl;
 	}
 }
 
@@ -92,14 +91,14 @@ void Character::addEquipment(Item* item, int ItemID) // 0: ����, 1: ��
         {  
             weaponEquipment = item; // �� ���� ����  
             addStatus(item); // �� ���� �ɷ�ġ ����  
-            cout << "you equip Weapon " << item->getItemName() << endl;  
+            cout << item->getItemName() << "를 장착했습니다!" << endl;
         }  
         else  
         {  
 			removeStatus(weaponEquipment); // ���� ���� �ɷ�ġ ����  
             inventory.push_back(weaponEquipment); // ���� ���⸦ �κ��丮�� �߰�  
-            cout << "equipped " << weaponEquipment->getItemName() << " put in bag" << endl;  
-            cout << "now you equip " << item->getItemName() << endl;  
+            cout << weaponEquipment->getItemName() << "를 장착 해제했습니다." << endl;  
+            cout << item->getItemName() << "를 장착했습니다!" << endl;
             weaponEquipment = item; // �� ���� ����  
             addStatus(item); // �� ���� �ɷ�ġ ����  
         }  
@@ -110,14 +109,14 @@ void Character::addEquipment(Item* item, int ItemID) // 0: ����, 1: ��
         {  
             armourEquipment = item; // �� �� ����  
             addStatus(item); // �� �� �ɷ�ġ ����  
-            cout << "equip : " << item->getItemName() << endl;  
+            cout << item->getItemName() << "를 장착했습니다!" << endl;
         }  
         else  
         {  
             removeStatus(armourEquipment); // ���� �� �ɷ�ġ ����  
             inventory.push_back(armourEquipment); // ���� ���� �κ��丮�� �߰�  
-            cout << "equipped : " << armourEquipment->getItemName() << " put in bag" << endl;  
-            cout << "now you equip " << item->getItemName() << endl;  
+            cout << armourEquipment->getItemName() << "를 장착 해제했습니다." << endl;
+            cout << item->getItemName() << "를 장착했습니다!" << endl;
             armourEquipment = item; // �� �� ����  
             addStatus(item); // �� �� �ɷ�ġ ����  
         }  
@@ -213,12 +212,12 @@ void Character::buyItem(Item* item)											//������ ����
 {
 	if (gold < item->getPrice())
 	{
-		cout << "Not enough gold to buy " << item->getItemName() << "." << endl;
+		cout << item->getItemName() << "를 사기에는 돈이 부족합니다!!\n";
 	}
 	else
 	{
 		gold -= item->getPrice();
-		cout << item->getItemName() << " bought for " << item->getPrice() << " gold." << endl;
+		cout << item->getItemName() << "를 샀습니다\n";
 		inventory.push_back(item);
 		
 		if (item->getItemID() == 2) // �������� ������ ���
@@ -231,7 +230,7 @@ void Character::buyItem(Item* item)											//������ ����
 		}
 		else
 		{
-			cout << "error" << endl;
+			cout << "에러 발생\n";
 		}
 	}
 }
@@ -276,8 +275,6 @@ void Character::addItem(Item* item)
 	{
 		NULL;
 	}
-
-	cout << item->getItemName() << " added to bag" << endl;
 }
 
 void Character::useItem() 
@@ -286,7 +283,7 @@ void Character::useItem()
 	{
 		int potionNum = rand() % potionBag.size();
 		addStatus(potionBag[potionNum]); // ������ �ɷ�ġ ����
-		cout << "you used" << potionBag[potionNum]->getItemName();
+		cout << name << "이(가) " << potionBag[potionNum]->getItemName() << "를 사용했습니다." << endl;
 		potionBag.erase(potionBag.begin() + potionNum);
 	}
 }

@@ -13,12 +13,11 @@ Shop::~Shop()
 
 void Shop::displayItems()
 {
-	std::cout << "상점에 오신 것을 환영합니다!" << std::endl;
 	std::cout << "구매 가능한 아이템:" << std::endl;
 	for (size_t i = 0; i < availableItems.size(); i++)
 	{
 		Item* item = availableItems[i];
-		std::cout << i << ". " << item->getItemName(); 
+		std::cout << i + 1 << ". " << item->getItemName(); 
 		if (item->getAttackPower() > 0) 
 		{
 			std::cout << " (공격력 + " << item->getAttackPower() << ")";
@@ -43,7 +42,7 @@ void Shop::buyItem(int index, Character* player)
 		return;
 	}
 
-	player->buyItem(availableItems[index]);
+	player->buyItem(availableItems[index - 1]);
 }
 
 void Shop::sellItem(Item* item, Character* player)
