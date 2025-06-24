@@ -52,7 +52,7 @@ vector<Item*> Character::inventoryInfo() // 인벤토리 리턴
     return totalitems;  
 }
 
-void Character::addExp(int amount)												//경험치 획득
+void Character::addExp(int amount)	
 {
 	exp += amount;
 	cout << name << amount << " exp points up!" << endl;

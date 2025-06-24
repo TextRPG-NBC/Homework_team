@@ -29,31 +29,28 @@ public:
 
 	int attack(Character* player);
 
-
 	//about battle 
-	//void attack(Character* target);
 	void takeDamage(int damage);
-
 
 	//about equipment
 	void addEquipment(Item* item, int ItemID);		 
 	void deleteEquipment(Item* item, int ItemID);	
 
 	//about shop
-	void buyItem(Item* item);						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
-	void sellItem(Item* item);						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä´ï¿½ ï¿½ï¿½ï¿½
+	void buyItem(Item* item);						
+	void sellItem(Item* item);						
 
 	//item management
-	void addItem(Item* item);						// ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¿ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½
-	void useItem();						// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	void addItem(Item* item);						
+	void useItem();									
 
-	// ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+	// ï¿½ï¿½ï¿?ï¿½ß°ï¿½
 	void addGold(int amount);
 
-	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­
+	// ÇÃ·¹ÀÌ¾î »óÅÂ º¯È­
 	void setPlayerState(State state);
 
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Getter
+	// ½ºÅÈ Á¤º¸ Getter
 	string getName() 			 const	{ return name; }
 	int getLevel() 				 const	{ return level; }
 	int getExp() 				 const	{ return exp; }
@@ -68,18 +65,18 @@ public:
 	vector<Item*> getInventory()		{ return inventory; }
 
 private:
-	string name;					// ï¿½Ì¸ï¿½
-	int level;						// ï¿½ï¿½ï¿½ï¿½
-	int exp;						// ï¿½ï¿½ï¿½ï¿½Ä¡
-	int health;						// Ã¼ï¿½ï¿½
-	int attackPower;				// ï¿½ï¿½ï¿½Ý·ï¿½
-	int criticalRate;				// Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½
-	int gold;						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	void addStatus(Item* item);		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ß°ï¿½
-	void removeStatus(Item* item);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	State playerState;				// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
-	Item* weaponEquipment;			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	Item* armourEquipment;			// ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	vector<Item*> potionBag;		// ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®
-	vector<Item*> inventory;		// ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®
+	string name;					
+	int level;						
+	int exp;						
+	int health;						
+	int attackPower;				
+	int criticalRate;				
+	int gold;						
+	void addStatus(Item* item);		
+	void removeStatus(Item* item);	
+	State playerState;				
+	Item* weaponEquipment;			
+	Item* armourEquipment;			
+	vector<Item*> potionBag;		
+	vector<Item*> inventory;		
 };
