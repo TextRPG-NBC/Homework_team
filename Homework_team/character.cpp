@@ -19,7 +19,7 @@ Character::Character(const string& name)
 	{}
 
 
-void Character::displayInfo() const {											//ĳ���� ����
+void Character::displayInfo() const {											      
 	cout << "Name: " << name << endl;
 	cout << "Level: " << level << endl;
 	cout << "Exp: " << exp << endl;
@@ -29,7 +29,7 @@ void Character::displayInfo() const {											//ĳ���� ����
 	cout << "Deposit: " << gold << endl << endl;
 }
 
-vector<Item*> Character::inventoryInfo() // �κ��丮 ����  
+vector<Item*> Character::inventoryInfo() 
 {  
     vector<Item*> totalitems;  
 
@@ -83,42 +83,42 @@ void Character::takeDamage(int damage)
 	}
 }
 
-void Character::addEquipment(Item* item, int ItemID) // 0: ����, 1: ��  
+void Character::addEquipment(Item* item, int ItemID)
 {  
-    if (ItemID == 0) // ���� ����  
+    if (ItemID == 0)            
     {  
         if (weaponEquipment == nullptr)  
         {  
-            weaponEquipment = item; // �� ���� ����  
-            addStatus(item); // �� ���� �ɷ�ġ ����  
+            weaponEquipment = item;    
+            addStatus(item); 
             cout << item->getItemName() << "를 장착했습니다!" << endl;
         }  
         else  
         {  
-			removeStatus(weaponEquipment); // ���� ���� �ɷ�ġ ����  
-            inventory.push_back(weaponEquipment); // ���� ���⸦ �κ��丮�� �߰�  
+			removeStatus(weaponEquipment); 
+            inventory.push_back(weaponEquipment);
             cout << weaponEquipment->getItemName() << "를 장착 해제했습니다." << endl;  
             cout << item->getItemName() << "를 장착했습니다!" << endl;
-            weaponEquipment = item; // �� ���� ����  
-            addStatus(item); // �� ���� �ɷ�ġ ����  
+            weaponEquipment = item;             
+            addStatus(item);            
         }  
     }  
-    else if (ItemID == 1) // �� ����  
+    else if (ItemID == 1)       
     {  
         if (armourEquipment == nullptr)
         {  
-            armourEquipment = item; // �� �� ����  
-            addStatus(item); // �� �� �ɷ�ġ ����  
+            armourEquipment = item;     
+            addStatus(item);  
             cout << item->getItemName() << "를 장착했습니다!" << endl;
         }  
         else  
         {  
-            removeStatus(armourEquipment); // ���� �� �ɷ�ġ ����  
-            inventory.push_back(armourEquipment); // ���� ���� �κ��丮�� �߰�  
+            removeStatus(armourEquipment);    
+            inventory.push_back(armourEquipment); 
             cout << armourEquipment->getItemName() << "를 장착 해제했습니다." << endl;
             cout << item->getItemName() << "를 장착했습니다!" << endl;
-            armourEquipment = item; // �� �� ����  
-            addStatus(item); // �� �� �ɷ�ġ ����  
+            armourEquipment = item; 
+            addStatus(item); 
         }  
     }  
     else  
@@ -128,9 +128,9 @@ void Character::addEquipment(Item* item, int ItemID) // 0: ����, 1: ��
 }
 
 
-void Character::deleteEquipment(Item* item, int ItemID)		//��� ����
+void Character::deleteEquipment(Item* item, int ItemID)		      
 {
-	if (ItemID == 0)											// ������ ���	
+	if (ItemID == 0)											           	
 		{
 		if (weaponEquipment == nullptr)	
 		{
@@ -138,15 +138,15 @@ void Character::deleteEquipment(Item* item, int ItemID)		//��� ����
 		}
 		else if (weaponEquipment != nullptr)						 
 		{
-			removeStatus(item);										// �ɷ�ġ ����
-			weaponEquipment = nullptr;								//���� ����
+			removeStatus(item);										     
+			weaponEquipment = nullptr;								         
 
 			for(int i = 0; i < inventory.size(); i++)
 				{
-				if (inventory[i]->getItemID() == 0)					// �κ��丮���� ���� ������ Ȯ��
+				if (inventory[i]->getItemID() == 0)					  
 					{
 					weaponEquipment = inventory[i];
-					inventory.erase(inventory.begin()+i);					// �κ��丮���� ����
+					inventory.erase(inventory.begin()+i);					    
 					addStatus(weaponEquipment);
 					break;
 					}
@@ -154,23 +154,23 @@ void Character::deleteEquipment(Item* item, int ItemID)		//��� ����
 		}
 	}
 
-	else if (ItemID == 1)										// ���� ���	
+	else if (ItemID == 1)									  	
 	{
 		if (armourEquipment == nullptr)							
 		{
 			cout << "No equipment this parts" << endl;
 		}
-		else if (armourEquipment != nullptr)						 //�� �ʱ�ȭ
+		else if (armourEquipment != nullptr)						
 		{
-			armourEquipment = nullptr;								// �� ����
-			removeStatus(item);										// �ɷ�ġ ����
+			armourEquipment = nullptr;							 
+			removeStatus(item);									  
 			
 				for (int i = 0; i < inventory.size(); i++)
 				{
-					if (inventory[i]->getItemID() == 1)					// �κ��丮���� ���� ������ Ȯ��
+					if (inventory[i]->getItemID() == 1)					
 					{
 						armourEquipment = inventory[i];
-						inventory.erase(inventory.begin()+i);					// �κ��丮���� ����
+						inventory.erase(inventory.begin()+i);			        
 						addStatus(armourEquipment);
 						break;
 					}
@@ -201,14 +201,14 @@ int Character::attack(Character* player)
 	
 	if (critCheck < player->criticalRate )
 	{
-		damage *= 2;			// ũ��Ƽ�ý� ������ �� ��
+		damage *= 2;			        
 	}
 	
 	return damage;
 }
 
 
-void Character::buyItem(Item* item)											//������ ����
+void Character::buyItem(Item* item)											      
 {
 	if (gold < item->getPrice())
 	{
@@ -220,11 +220,11 @@ void Character::buyItem(Item* item)											//������ ����
 		cout << item->getItemName() << "를 샀습니다\n";
 		inventory.push_back(item);
 		
-		if (item->getItemID() == 2) // �������� ������ ���
+		if (item->getItemID() == 2)                  
 		{
 			potionBag.push_back(item);
 		}
-		else if (item->getItemID() == 0 || item->getItemID() == 1) // �������� ���⳪ ���� ���
+		else if (item->getItemID() == 0 || item->getItemID() == 1)  
 		{
 			addEquipment(item, item->getItemID());
 		}
@@ -235,11 +235,11 @@ void Character::buyItem(Item* item)											//������ ����
 	}
 }
 
-void Character::sellItem(Item* item)							// ������ �Ǹ�
+void Character::sellItem(Item* item)							
 {
-	gold += item->getPrice();									// ��� ȹ��
+	gold += item->getPrice();									
 
-	if (item->getItemID() == 2)										//���� ����
+	if (item->getItemID() == 2)										 
 	{        
 		auto potionIt = std::find(potionBag.begin(), potionBag.end(), item);
         if (potionIt != potionBag.end())
@@ -247,7 +247,7 @@ void Character::sellItem(Item* item)							// ������ �Ǹ�
             potionBag.erase(potionIt);
         }
 	}
-	else if (item->getItemID() == 0 || item->getItemID() == 1)		 //��� ���� 
+	else if (item->getItemID() == 0 || item->getItemID() == 1)		  
 	{
 		deleteEquipment(item, item->getItemID());				
 	}
@@ -268,7 +268,7 @@ void Character::addItem(Item* item)
 		int itemIdCheck = item->getItemID();
 		if (itemIdCheck){
 			addEquipment(item, itemIdCheck);
-			inventory.push_back(item); // �������� �κ��丮�� �߰�
+			inventory.push_back(item); 
 		}
 	}
 	else
@@ -282,8 +282,9 @@ void Character::useItem()
 	if(!potionBag.empty())
 	{
 		int potionNum = rand() % potionBag.size();
-		addStatus(potionBag[potionNum]); // ������ �ɷ�ġ ����
-		cout << name << "이(가) " << potionBag[potionNum]->getItemName() << "를 사용했습니다." << endl;
+		addStatus(potionBag[potionNum]);   
+		//std::cout << name << "이(가) " << potionBag[potionNum]->getItemName() << "를 사용했습니다." << endl;
+		std::cout << name << " use " << potionBag[potionNum]->getItemName() << endl;
 		potionBag.erase(potionBag.begin() + potionNum);
 	}
 }
