@@ -10,6 +10,6 @@ private:
 	vector<Item*> itemVector;
 
 public:
-	void getItemListVector();
+	vector<Item*> getItemListVector();
 	Item* randomItem();
 };
