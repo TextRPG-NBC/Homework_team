@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterTypes.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="CommonInclude.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="MonsterTypes.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="RandomUtils.h" />

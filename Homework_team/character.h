@@ -31,6 +31,7 @@ public:
 	//void attack(Character* target);
 	void takeDamage(int damage);
 
+
 	//about equipment
 	void addEquipment(Item* item, int positon);
 	void deleteEquipment(Item* item, int position);
