@@ -25,7 +25,7 @@ public:
 	vector<Item> invenrotoryInfo();
 	void addExp(int amount);
 
-	int attack(Monster* target);
+	int attack(Character* player);
 
 
 	//about battle 
@@ -44,7 +44,7 @@ public:
 
 	//item management
 	void addItem(Item* item);
-	void useItem(Item* item);
+	void useItem();
 
 	// °ñµå Ãß°¡
 	void addGold(int amount);

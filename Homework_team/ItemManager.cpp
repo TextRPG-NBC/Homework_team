@@ -22,6 +22,6 @@ vector<Item*> ItemManager::getItemListVector()
 
 Item* ItemManager::randomItem()
 {
-      int randomIndex = rand() % itemVector.size();
-    return itemVector[randomIndex];
+   int randomIndex = rand() % itemVector.size();
+   return itemVector[randomIndex];
 }
