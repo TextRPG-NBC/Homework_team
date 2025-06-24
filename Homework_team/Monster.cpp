@@ -4,7 +4,6 @@
 
 Monster::~Monster()
 {
-	delete item;
 }
 
 void Monster::takeDamage(int damage)

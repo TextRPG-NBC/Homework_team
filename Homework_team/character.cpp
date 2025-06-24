@@ -22,7 +22,7 @@ void Character::displayInfo() const {											//캐릭터 정보
 	cout << "Health: " << health << endl;
 	cout << "Attack Power: " << attackPower << endl;
 	cout << "Critical Rate: " << criticalRate << "%" << endl;
-	cout << "Have money : " << gold << endl;
+	cout << "Have money : " << gold << endl << endl;
 }
 
 vector<Item*> Character::inventoryInfo() // 인벤토리 리턴  

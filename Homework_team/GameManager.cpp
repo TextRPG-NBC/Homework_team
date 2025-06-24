@@ -174,7 +174,7 @@ void GameManager::run()
 	while (1) {
 		system("cls");
 		
-		// 플레이어 스택 출력
+		// 플레이어 스탯 출력
 		player->displayInfo();
 		// 전투하기
 		battle();
