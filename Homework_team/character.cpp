@@ -6,10 +6,11 @@ using namespace std;
 
 Character::Character(const string& name)
 	: name(name)
-	, level(0)
+	, level(1)
+	, additionalHealth(0)
 	, exp(0)
-	, health(0)
-	, attackPower(0)
+	, health(200)
+	, attackPower(30)
 	, criticalRate(0)
 	, gold(0)
 	, playerState(State::ALIVE)
@@ -60,7 +61,7 @@ void Character::addExp(int amount)
 	{
 		exp = 0;
 		level++;
-		health = 180 + (level * 20);
+		health = 180 + (level * 20) + additionalHealth;
 		attackPower = 25 + (level * 5);
 
 		cout << name << " is level up! : " << level << endl;
@@ -178,7 +179,7 @@ void Character::deleteEquipment(Item* item, int ItemID)		//장비 제거
 void Character::addStatus(Item* item)
 {
 	attackPower += item->getAttackPower();
-	health += item->getHealth();
+	additionalHealth += item->getHealth();
 	criticalRate += item->getCritRate();
 }
 
