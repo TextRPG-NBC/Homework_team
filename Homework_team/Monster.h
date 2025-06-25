@@ -6,7 +6,8 @@ class Item;
 
 class Monster {
 public:
-	~Monster();
+	Monster(const std::string& name, int level, int hpMin, int hpMax, int atkMin, int atkMax, Item* item);
+	virtual ~Monster() = default;
 
 	void takeDamage(int damage);
 	void displayMonster();

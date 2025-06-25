@@ -91,14 +91,14 @@ void Character::addEquipment(Item* item, int ItemID)
         {  
             weaponEquipment = item;    
             addStatus(item); 
-            cout << item->getItemName() << "를 장착했습니다!" << endl;
+            cout << name << " equipped " << item->getItemName() << endl;
         }  
         else  
         {  
 			removeStatus(weaponEquipment); 
             inventory.push_back(weaponEquipment);
-            cout << weaponEquipment->getItemName() << "를 장착 해제했습니다." << endl;  
-            cout << item->getItemName() << "를 장착했습니다!" << endl;
+            cout << weaponEquipment->getItemName() << " is unequipped" << endl;  
+			cout << name << " equipped " << item->getItemName() << endl;
             weaponEquipment = item;             
             addStatus(item);            
         }  
@@ -109,14 +109,14 @@ void Character::addEquipment(Item* item, int ItemID)
         {  
             armourEquipment = item;     
             addStatus(item);  
-            cout << item->getItemName() << "를 장착했습니다!" << endl;
+			cout << name << " equipped " << item->getItemName() << endl;
         }  
         else  
         {  
             removeStatus(armourEquipment);    
             inventory.push_back(armourEquipment); 
-            cout << armourEquipment->getItemName() << "를 장착 해제했습니다." << endl;
-            cout << item->getItemName() << "를 장착했습니다!" << endl;
+			cout << weaponEquipment->getItemName() << " is unequipped" << endl;
+			cout << name << " equipped " << item->getItemName() << endl;
             armourEquipment = item; 
             addStatus(item); 
         }  
@@ -212,12 +212,12 @@ void Character::buyItem(Item* item)
 {
 	if (gold < item->getPrice())
 	{
-		cout << item->getItemName() << "를 사기에는 돈이 부족합니다!!\n";
+		cout << "NOT ENOUGH MONEY!!\n";
 	}
 	else
 	{
 		gold -= item->getPrice();
-		cout << item->getItemName() << "를 샀습니다\n";
+		cout << "BUY " << item->getItemName() << "\n";
 		inventory.push_back(item);
 		
 		if (item->getItemID() == 2)                  
@@ -230,7 +230,7 @@ void Character::buyItem(Item* item)
 		}
 		else
 		{
-			cout << "에러 발생\n";
+			cout << "!!!Error!!!\n";
 		}
 	}
 }

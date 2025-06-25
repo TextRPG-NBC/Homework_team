@@ -2,8 +2,11 @@
 #include "Item.h"
 #include "ItemManager.h"
 
-Monster::~Monster()
+Monster::Monster(const std::string& name, int level, int hpMin, int hpMax, int atkMin, int atkMax, Item* item)
+	:name(name), item(item)
 {
+	health = level * RandomUtil::getInt(hpMin, hpMax);
+	attack = level * RandomUtil::getInt(atkMin, atkMax);
 }
 
 void Monster::takeDamage(int damage)

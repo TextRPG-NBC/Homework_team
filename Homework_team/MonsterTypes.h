@@ -8,44 +8,27 @@ class Goblin : public Monster
 {
 public:
 	Goblin(int level, Item* item) 
-	{
-		name = "Goblin";
-		health = level * RandomUtil::getInt(20, 30);	// 체력: (레벨 × 20) ~ (레벨 × 30)
-		attack = level * RandomUtil::getInt(5, 10);		// 공격력: (레벨 × 5) ~ (레벨 × 10)
-		this->item = item;
-	}
+		: Monster("Goblin", level, 20, 30, 5, 10, item) {}
 };
 
 class Orc : public Monster
 {
 public:
-	Orc(int level, Item* item) {
-		name = "Orc";
-		health = level * RandomUtil::getInt(20, 30);	// 체력: (레벨 × 20) ~ (레벨 × 30)
-		attack = level * RandomUtil::getInt(5, 10);		// 공격력: (레벨 × 5) ~ (레벨 × 10)
-		this->item = item;
-	}
+	Orc(int level, Item* item) 
+		: Monster("Orc", level, 20, 30, 5, 10, item) {}
 };
 
 class Troll : public Monster
 {
 public:
-	Troll(int level, Item* item) {
-		name = "Troll";
-		health = level * RandomUtil::getInt(20, 30);	// 체력: (레벨 × 20) ~ (레벨 × 30)
-		attack = level * RandomUtil::getInt(5, 10);		// 공격력: (레벨 × 5) ~ (레벨 × 10)
-		this->item = item;
-	}
+	Troll(int level, Item* item)
+		: Monster("Troll", level, 20, 30, 5, 10, item) {}
 };
 
 class BossMonster : public Monster
 {
 public:
-	BossMonster(int level, Item* item) {
-		name = "BossMonster";
-		health = level * RandomUtil::getInt(30, 45);	// 체력: (레벨 × 30) ~ (레벨 × 45)
-		attack = level * RandomUtil::getInt(8, 15);		// 공격력: (레벨 × 8) ~ (레벨 × 15)
-		this->item = item;
-	}
+	BossMonster(int level, Item* item) 
+		: Monster("BossMonster", level, 30, 45, 8, 15, item) {}
 };
 
